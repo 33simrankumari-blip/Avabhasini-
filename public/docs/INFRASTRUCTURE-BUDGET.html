@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infrastructure Budget — AYURDISHA Meet the Mentors</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --forest: #1B4332;
+      --forest-deep: #0F2A1F;
+      --forest-mid: #2D6A4F;
+      --cream: #F5EBE0;
+      --sand: #EDE4D4;
+      --gold: #D4A84B;
+      --oak: #C4A484;
+      --ink: #1A2E24;
+      --muted: #5C6B62;
+      --line: #D9CBB8;
+      --white: #FFFEFB;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      caret-color: transparent;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+      font-size: 11pt;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 210mm;
+      margin: 0 auto;
+      background: var(--white);
+      min-height: 297mm;
+      padding: 0;
+    }
+
+    .title-page {
+      min-height: 297mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(165deg, var(--forest-deep) 0%, var(--forest) 45%, var(--forest-mid) 100%);
+      color: var(--white);
+      padding: 48px 56px;
+      page-break-after: always;
+    }
+
+    .title-page .eyebrow {
+      font-size: 10pt;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .title-page h1 {
+      font-family: Fraunces, "Source Serif 4", Georgia, serif;
+      font-size: 32pt;
+      font-weight: 700;
+      line-height: 1.15;
+      margin-top: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .title-page .subtitle {
+      font-size: 14pt;
+      color: var(--sand);
+      margin-top: 16px;
+      font-weight: 400;
+    }
+
+    .title-page .event {
+      font-family: Fraunces, Georgia, serif;
+      font-size: 13pt;
+      color: var(--gold);
+      margin-top: 32px;
+    }
+
+    .title-divider {
+      width: 80px;
+      height: 3px;
+      background: var(--gold);
+      margin: 28px 0;
+    }
+
+    .title-budget {
+      margin-top: 28px;
+      padding: 18px 22px;
+      border: 1px solid rgba(212, 168, 75, 0.45);
+      border-radius: 6px;
+      background: rgba(15, 42, 31, 0.35);
+    }
+
+    .title-budget .label {
+      font-size: 9pt;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--oak);
+    }
+
+    .title-budget .value {
+      font-family: Fraunces, Georgia, serif;
+      font-size: 26pt;
+      font-weight: 700;
+      color: var(--gold);
+      margin-top: 4px;
+    }
+
+    .title-budget .usd {
+      font-size: 11pt;
+      color: var(--sand);
+      margin-top: 2px;
+    }
+
+    .title-meta {
+      margin-top: auto;
+      border-top: 1px solid rgba(212, 168, 75, 0.35);
+      padding-top: 28px;
+    }
+
+    .title-meta table { width: 100%; border-collapse: collapse; }
+    .title-meta td { padding: 6px 0; vertical-align: top; }
+    .title-meta td:first-child {
+      width: 38%;
+      color: var(--oak);
+      font-size: 9.5pt;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .title-meta td:last-child { font-size: 10.5pt; }
+
+    .content-page {
+      padding: 44px 52px 56px;
+      page-break-after: always;
+    }
+
+    .content-page:last-child { page-break-after: auto; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--forest);
+    }
+
+    .section-num {
+      background: var(--forest);
+      color: var(--gold);
+      font-family: Fraunces, serif;
+      font-size: 13pt;
+      font-weight: 700;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    h2 {
+      font-family: Fraunces, Georgia, serif;
+      font-size: 16pt;
+      font-weight: 700;
+      color: var(--forest);
+      letter-spacing: -0.02em;
+    }
+
+    h3 {
+      font-family: Fraunces, Georgia, serif;
+      font-size: 12pt;
+      font-weight: 600;
+      color: var(--forest-mid);
+      margin: 20px 0 10px;
+    }
+
+    p { margin-bottom: 12px; }
+
+    ul, ol { margin: 8px 0 14px 22px; }
+    li { margin-bottom: 5px; }
+
+    .summary-box {
+      background: linear-gradient(135deg, var(--forest-deep), var(--forest));
+      color: var(--white);
+      border-radius: 8px;
+      padding: 22px 26px;
+      margin: 18px 0 22px;
+    }
+
+    .summary-box p { margin-bottom: 8px; color: var(--sand); }
+    .summary-box p:last-child { margin-bottom: 0; }
+    .summary-box strong { color: var(--gold); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 20px;
+      font-size: 9.5pt;
+    }
+
+    thead th {
+      background: var(--forest);
+      color: var(--white);
+      text-align: left;
+      padding: 9px 10px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    tbody td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    tbody tr:nth-child(even) { background: var(--sand); }
+    tbody tr.total-row { background: var(--forest) !important; color: var(--white); font-weight: 700; }
+    tbody tr.total-row td { border-bottom: none; }
+    tbody tr.subtotal-row { background: #e8ddd0 !important; font-weight: 600; }
+    tbody tr.reserve-row { background: #f0e6d6 !important; font-style: italic; }
+
+    .scenario-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0 22px;
+    }
+
+    .scenario-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: var(--white);
+    }
+
+    .scenario-card.recommended {
+      border-color: var(--gold);
+      border-width: 2px;
+      background: linear-gradient(180deg, #fdf8f0, var(--white));
+    }
+
+    .scenario-card .label {
+      font-size: 8.5pt;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .scenario-card .amount {
+      font-family: Fraunces, serif;
+      font-size: 18pt;
+      font-weight: 700;
+      color: var(--forest);
+      margin: 6px 0 2px;
+    }
+
+    .scenario-card .usd {
+      font-size: 9pt;
+      color: var(--muted);
+    }
+
+    .scenario-card .badge {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--forest-deep);
+      font-size: 7.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-bottom: 8px;
+    }
+
+    .note-box {
+      background: var(--sand);
+      border-left: 4px solid var(--gold);
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 10pt;
+    }
+
+    .timeline-table td:first-child {
+      font-weight: 600;
+      color: var(--forest);
+      white-space: nowrap;
+      width: 22%;
+    }
+
+    .footer-block {
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      font-size: 9pt;
+      color: var(--muted);
+    }
+
+    .prepared-table td:first-child {
+      font-weight: 600;
+      color: var(--forest-mid);
+      width: 32%;
+      padding: 5px 12px 5px 0;
+    }
+
+    .prepared-table td { padding: 5px 0; border: none; background: none !important; }
+
+    .page-footer {
+      text-align: center;
+      font-size: 8.5pt;
+      color: var(--muted);
+      margin-top: 28px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    .compact-table { font-size: 8.5pt; }
+    .compact-table td, .compact-table th { padding: 6px 8px; }
+
+    .phase-tag {
+      display: inline-block;
+      background: var(--forest-mid);
+      color: var(--white);
+      font-size: 7.5pt;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 2px 7px;
+      border-radius: 3px;
+      margin-right: 4px;
+    }
+
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0 20px;
+    }
+
+    .screenshot-item {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .screenshot-item img {
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      display: block;
+    }
+
+    .screenshot-item figcaption {
+      font-size: 9pt;
+      color: var(--muted);
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+
+    .screenshot-item figcaption strong {
+      color: var(--forest);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .annexure-img {
+      max-width: 420px;
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      margin: 12px 0 16px;
+    }
+
+    @media print {
+      * {
+        outline: none !important;
+        box-shadow: none !important;
+      }
+      *::selection {
+        background: transparent !important;
+        color: inherit !important;
+      }
+      *:focus, *:focus-visible, *:focus-within {
+        outline: none !important;
+        box-shadow: none !important;
+      }
+      html, body {
+        caret-color: transparent !important;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      body {
+        background: white;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .page { max-width: none; box-shadow: none; }
+      .title-page, .content-page { page-break-after: always; }
+      .no-print { display: none !important; }
+    }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <section class="title-page">
+    <div>
+      <div class="eyebrow">World Ayurveda Foundation</div>
+      <h1>Infrastructure Budget<br/>Proposal</h1>
+      <div class="title-divider"></div>
+      <div class="subtitle">AYURDISHA — Meet the Mentors<br/>Experience Zone</div>
+      <div class="event">11th World Ayurveda Congress · Bhubaneswar 2026</div>
+      <div class="title-budget">
+        <div class="label">Total Approved Allocation — Recommended Scenario</div>
+        <div class="value">₹1,00,000</div>
+        <div class="usd">Approximately $1,176 USD (at ₹85 per USD)</div>
+      </div>
+    </div>
+    <div class="title-meta">
+      <table>
+        <tr><td>Organization</td><td>World Ayurveda Foundation</td></tr>
+        <tr><td>Document Type</td><td>Committee Presentation — Infrastructure &amp; Technical Services</td></tr>
+        <tr><td>Production Application</td><td>https://ayushmarg.vercel.app</td></tr>
+        <tr><td>Planned Domain</td><td>ayurdisha.ai</td></tr>
+        <tr><td>Date</td><td>September 2026</td></tr>
+        <tr><td>Classification</td><td>Internal — Organising Committee Review</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="content-page">
+    <div class="section-header">
+      <div class="section-num">ES</div>
+      <h2>Executive Summary</h2>
+    </div>
+
+    <p>This document presents the comprehensive infrastructure, platform development, and operational personnel budget to ensure reliable, secure, multi-user operation of the <strong>AYURDISHA Meet the Mentors</strong> web application during the 11th World Ayurveda Congress. The application supports delegate registration (email OTP verification), live question submission, mentor cluster curation by staff, and AI-assisted journal search in the Knowledge tab.</p>
+
+    <div class="summary-box">
+      <p>The current architecture is <strong>fully serverless</strong> — Google Firestore, Vercel serverless functions, Google Gemini API, and transactional email — requiring <strong>no dedicated servers</strong>.</p>
+      <p>Free-tier limits are sufficient for development and low-traffic preview but will <strong>throttle or fail under congress-day load</strong> (estimated 200–500+ concurrent delegates).</p>
+      <p><strong>Phase 1 (₹60,000)</strong> = Subtotal A (cloud, ₹26,361) + Subtotal B (software engineering, ₹30,000) + Subtotal C (congress-week assurance, ₹3,639). <strong>Phase 2 (₹29,000)</strong> covers congress personnel and operational support. A <strong>contingency reserve of ₹11,000</strong> is held for unforeseen requirements.</p>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Subtotal</th><th>Description</th><th>Amount (INR)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>A</strong></td><td>Cloud &amp; Infrastructure (Firebase, Vercel, Gemini, email, domain, SSL, security)</td><td><strong>₹26,361</strong></td></tr>
+        <tr><td><strong>B</strong></td><td>Software Engineering &amp; Web Development (design, build, test, deploy)</td><td><strong>₹30,000</strong></td></tr>
+        <tr><td><strong>C</strong></td><td>Technical Assurance — congress-week operations (monitoring, on-call, hotfix)</td><td><strong>₹3,639</strong></td></tr>
+        <tr class="subtotal-row"><td colspan="2"><strong>Phase 1 Total (A + B + C)</strong></td><td><strong>₹60,000</strong></td></tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Scenario</th>
+          <th>Phase 1</th>
+          <th>Phase 2</th>
+          <th>Contingency</th>
+          <th>Total (INR)</th>
+          <th>Total (USD)</th>
+          <th>Use Case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Minimum</strong></td>
+          <td>₹40,000</td>
+          <td>₹24,000</td>
+          <td>₹11,000 (15%)</td>
+          <td><strong>₹75,000</strong></td>
+          <td>~$882</td>
+          <td>Essential cloud upgrades and minimal personnel</td>
+        </tr>
+        <tr class="subtotal-row">
+          <td><strong>Recommended ★</strong></td>
+          <td>₹60,000</td>
+          <td>₹29,000</td>
+          <td>₹11,000 (11%)</td>
+          <td><strong>₹1,00,000</strong></td>
+          <td>~$1,176</td>
+          <td>Full platform build + cloud premium + congress operations team</td>
+        </tr>
+        <tr>
+          <td><strong>Maximum</strong></td>
+          <td>₹88,000</td>
+          <td>₹30,000</td>
+          <td>₹12,000 (10%)</td>
+          <td><strong>₹1,30,000</strong></td>
+          <td>~$1,529</td>
+          <td>Enterprise buffers; extended personnel and redundancy</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="scenario-cards">
+      <div class="scenario-card">
+        <div class="label">Minimum</div>
+        <div class="amount">₹75,000</div>
+        <div class="usd">~$882 USD</div>
+        <p style="font-size:9pt;margin-top:10px;margin-bottom:0;color:var(--muted)">Essential upgrades; moderate risk under peak load</p>
+      </div>
+      <div class="scenario-card recommended">
+        <div class="badge">Recommended ★</div>
+        <div class="label">Recommended</div>
+        <div class="amount">₹1,00,000</div>
+        <div class="usd">~$1,176 USD</div>
+        <p style="font-size:9pt;margin-top:10px;margin-bottom:0;color:var(--muted)">Full platform + cloud + congress personnel</p>
+      </div>
+      <div class="scenario-card">
+        <div class="label">Maximum</div>
+        <div class="amount">₹1,30,000</div>
+        <div class="usd">~$1,529 USD</div>
+        <p style="font-size:9pt;margin-top:10px;margin-bottom:0;color:var(--muted)">Enterprise buffers; record attendance coverage</p>
+      </div>
+    </div>
+
+    <div class="page-footer">AYURDISHA Infrastructure Budget · September 2026 · Page 2</div>
+  </section>
+
+  <section class="content-page">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <h2>Project Overview</h2>
+    </div>
+
+    <h3>1.1 Application Purpose</h3>
+    <p>The Meet the Mentors Experience Zone enables congress delegates to:</p>
+    <ul>
+      <li>Register and verify identity via email OTP</li>
+      <li>Browse mentor profiles and thematic clusters</li>
+      <li>Submit questions for mentor sessions</li>
+      <li>Search Ayurvedic journals via AI-powered Knowledge tab (Google Gemini)</li>
+      <li>Allow staff to curate, cluster, and export delegate data in real time</li>
+    </ul>
+
+    <h3>1.2 Technical Architecture</h3>
+    <table>
+      <thead>
+        <tr><th>Layer</th><th>Technology</th><th>Project / Provider</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Frontend</td><td>React (Vite), deployed on Vercel</td><td>ayushmarg.vercel.app → ayurdisha.ai</td></tr>
+        <tr><td>API / Serverless</td><td>Vercel Functions (Node.js)</td><td>Vercel</td></tr>
+        <tr><td>Primary Database</td><td>Google Cloud Firestore</td><td>Firebase: ayurdisha-4917b</td></tr>
+        <tr><td>AI Search</td><td>Google Gemini API</td><td>Google AI Studio</td></tr>
+        <tr><td>Email (OTP)</td><td>Resend / SendGrid (transactional)</td><td>Resend or equivalent</td></tr>
+        <tr><td>Authentication</td><td>Signed HttpOnly cookies, server-side OTP</td><td>Application layer</td></tr>
+        <tr><td>Security</td><td>Firebase App Check, Firestore security rules</td><td>Firebase</td></tr>
+        <tr><td>Monitoring</td><td>Sentry / UptimeRobot / Vercel Analytics</td><td>Third-party SaaS</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note-box">
+      <strong>No dedicated server required.</strong> Premium tiers and technical services ensure reliability under peak congress load. All scaling is managed automatically by cloud providers.
+    </div>
+
+    <div class="page-footer">AYURDISHA Infrastructure Budget · September 2026 · Page 3</div>
+  </section>
+
+  <section class="content-page">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <h2>Technical Justification</h2>
+    </div>
+
+    <h3>2.1 Cloud &amp; Infrastructure — Premium Tiers <span class="phase-tag">PHASE 1 · A</span></h3>
+
+    <h3 style="margin-top:14px;font-size:11pt;">Firebase Blaze — Firestore (Critical)</h3>
+    <table>
+      <thead><tr><th></th><th>Free (Spark)</th><th>Recommended (Blaze — Premium Buffer)</th></tr></thead>
+      <tbody>
+        <tr><td>Daily reads</td><td>~50,000/day</td><td>Pay-as-you-go, no hard cap</td></tr>
+        <tr><td>Behaviour at scale</td><td>Throttles at ~200–300 active users</td><td>Scales with usage</td></tr>
+        <tr><td>Budget allocation</td><td>₹0</td><td><strong>₹5,500</strong> (~$65)</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:14px;font-size:11pt;">Vercel Pro — Hosting &amp; API</h3>
+    <table>
+      <thead><tr><th></th><th>Hobby (Free)</th><th>Pro (Recommended)</th></tr></thead>
+      <tbody>
+        <tr><td>Monthly cost</td><td>₹0</td><td>~₹1,700/month (~$20 USD)</td></tr>
+        <tr><td>Serverless execution</td><td>10s timeout, limited concurrency</td><td>60s timeout, higher limits</td></tr>
+        <tr><td>Budget allocation</td><td>—</td><td><strong>₹7,500</strong> (~$88) — 2-month event period</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>Domain registration — ayurdisha.ai (1st year):</strong> Official congress domain. Registrar quote: <strong>₹4,761</strong> (~$56) — see Annexure A.</p>
+    <p><strong>SSL + CDN extras:</strong> Certificate management and bandwidth headroom. Budget allocation: <strong>₹800</strong> (~$9).</p>
+    <p><strong>Firebase App Check &amp; Security Rules Audit:</strong> Professional review before public registration. Budget allocation: <strong>₹2,500</strong> (~$29).</p>
+
+    <p style="margin-top:16px;"><strong>Subtotal A — Cloud &amp; Infrastructure (Recommended): ₹26,361</strong> (~$310)</p>
+
+    <h3>2.2 Software Engineering &amp; Web Development <span class="phase-tag">PHASE 1 · B</span></h3>
+    <p>Congress-grade platform scope: delegate registration with OTP, staff curation tools, Gemini-powered Knowledge hub, and Firestore backend. The <strong>₹30,000</strong> fee covers end-to-end design, build, pre-launch testing, security hardening, and production deployment — a realistic committee rate for the Indian market.</p>
+    <table class="compact-table">
+      <thead>
+        <tr><th>#</th><th>Service</th><th>Recommended (INR)</th><th>USD</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>8a</td><td>UI/UX design &amp; wireframes — delegate and staff journeys</td><td>₹6,000</td><td>~$71</td></tr>
+        <tr><td>8b</td><td>Frontend development — React/Vite registration, Knowledge tab, staff dashboard</td><td>₹8,000</td><td>~$94</td></tr>
+        <tr><td>8c</td><td>Backend/API &amp; Firestore integration — OTP, Gemini search, security rules</td><td>₹8,000</td><td>~$94</td></tr>
+        <tr><td>8d</td><td>Testing, load testing &amp; security review — pre-launch QA (500+ users)</td><td>₹5,000</td><td>~$59</td></tr>
+        <tr><td>8e</td><td>Deployment, backup/DR &amp; production handover — ayurdisha.ai cutover</td><td>₹3,000</td><td>~$35</td></tr>
+        <tr class="subtotal-row"><td colspan="2"><strong>Subtotal B — Software Engineering</strong></td><td><strong>₹30,000</strong></td><td><strong>~$353</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h3>2.3 Technical Assurance — Congress-Week Operations <span class="phase-tag">PHASE 1 · C</span></h3>
+    <p>Live-event technical support during the 3-day congress. Pre-launch assurance (load testing, security review, backup setup) is included in Subtotal B above.</p>
+    <table class="compact-table">
+      <thead>
+        <tr><th>#</th><th>Service</th><th>Recommended (INR)</th><th>USD</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>9</td><td>Real-time monitoring (Sentry / UptimeRobot premium)</td><td>₹1,200</td><td>~$14</td></tr>
+        <tr><td>10</td><td>On-call technical support during congress (3 days)</td><td>₹1,639</td><td>~$19</td></tr>
+        <tr><td>11</td><td>Bug fixes &amp; hotfix buffer during event</td><td>₹800</td><td>~$9</td></tr>
+        <tr class="subtotal-row"><td colspan="2"><strong>Subtotal C — Technical Assurance</strong></td><td><strong>₹3,639</strong></td><td><strong>~$43</strong></td></tr>
+        <tr class="total-row"><td colspan="2"><strong>Phase 1 Total (A + B + C)</strong></td><td><strong>₹60,000</strong></td><td><strong>~$706</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h3>2.4 Personnel &amp; Operational Support <span class="phase-tag">PHASE 2</span></h3>
+    <table class="compact-table">
+      <thead>
+        <tr><th>#</th><th>Role / Service</th><th>Recommended (INR)</th><th>USD</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>12</td><td>Data Analyst — congress usage analysis &amp; reporting</td><td>₹7,500</td><td>~$88</td></tr>
+        <tr><td>13</td><td>Observer / field coordinator — on-ground monitoring</td><td>₹6,000</td><td>~$71</td></tr>
+        <tr><td>14</td><td>Technical documentation specialist</td><td>₹4,500</td><td>~$53</td></tr>
+        <tr><td>15</td><td>User experience reviewer</td><td>₹3,500</td><td>~$41</td></tr>
+        <tr><td>16</td><td>Event-day helpdesk support</td><td>₹5,500</td><td>~$65</td></tr>
+        <tr><td>17</td><td>Communications &amp; delegate liaison</td><td>₹2,000</td><td>~$24</td></tr>
+        <tr class="total-row"><td colspan="2"><strong>Phase 2 Total</strong></td><td><strong>₹29,000</strong></td><td><strong>~$341</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="page-footer">AYURDISHA Infrastructure Budget · September 2026 · Page 4</div>
+  </section>
+
+  <section class="content-page">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <h2>Itemized Budget — Recommended Scenario (★)</h2>
+    </div>
+
+    <table class="compact-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Service</th>
+          <th>Phase</th>
+          <th>Min (INR)</th>
+          <th>Rec. (INR)</th>
+          <th>Max (INR)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="subtotal-row"><td colspan="6"><strong>A. Cloud &amp; Infrastructure</strong></td></tr>
+        <tr><td>1</td><td>Firebase Blaze (Firestore) — premium buffer</td><td>1</td><td>₹3,500</td><td>₹5,500</td><td>₹8,000</td></tr>
+        <tr><td>2</td><td>Vercel Pro — hosting &amp; API</td><td>1</td><td>₹5,000</td><td>₹7,500</td><td>₹12,000</td></tr>
+        <tr><td>3</td><td>Google Gemini API — enterprise buffer</td><td>1</td><td>₹2,000</td><td>₹3,500</td><td>₹5,000</td></tr>
+        <tr><td>4</td><td>Resend Pro / SendGrid — OTP at scale</td><td>1</td><td>₹1,200</td><td>₹1,800</td><td>₹3,000</td></tr>
+        <tr><td>5</td><td><strong>Domain registration — ayurdisha.ai (1st year)</strong></td><td>1</td><td>₹4,761</td><td><strong>₹4,761</strong></td><td>₹4,761</td></tr>
+        <tr><td>6</td><td>SSL + CDN extras</td><td>1</td><td>₹500</td><td>₹800</td><td>₹1,500</td></tr>
+        <tr><td>7</td><td>Firebase App Check / security rules audit</td><td>1</td><td>₹1,500</td><td>₹2,500</td><td>₹4,000</td></tr>
+        <tr class="subtotal-row"><td colspan="3"><strong>Subtotal A — Cloud &amp; Infrastructure</strong></td><td><strong>₹18,461</strong></td><td><strong>₹26,361</strong></td><td><strong>₹38,261</strong></td></tr>
+        <tr class="subtotal-row"><td colspan="6"><strong>B. Software Engineering &amp; Web Development</strong></td></tr>
+        <tr><td>8a</td><td>UI/UX design &amp; wireframes</td><td>1</td><td>₹3,000</td><td>₹6,000</td><td>₹8,000</td></tr>
+        <tr><td>8b</td><td>Frontend development (React/Vite)</td><td>1</td><td>₹4,000</td><td>₹8,000</td><td>₹12,000</td></tr>
+        <tr><td>8c</td><td>Backend/API &amp; Firestore integration</td><td>1</td><td>₹4,000</td><td>₹8,000</td><td>₹12,000</td></tr>
+        <tr><td>8d</td><td>Testing, load testing &amp; security review</td><td>1</td><td>₹2,500</td><td>₹5,000</td><td>₹8,000</td></tr>
+        <tr><td>8e</td><td>Deployment, backup/DR &amp; production handover</td><td>1</td><td>₹1,500</td><td>₹3,000</td><td>₹5,000</td></tr>
+        <tr class="subtotal-row"><td colspan="3"><strong>Subtotal B — Software Engineering</strong></td><td><strong>₹15,000</strong></td><td><strong>₹30,000</strong></td><td><strong>₹45,000</strong></td></tr>
+        <tr class="subtotal-row"><td colspan="6"><strong>C. Technical Assurance — Congress-Week Operations</strong></td></tr>
+        <tr><td>9</td><td>Real-time monitoring (Sentry / UptimeRobot)</td><td>1</td><td>₹2,000</td><td>₹1,200</td><td>₹2,000</td></tr>
+        <tr><td>10</td><td>On-call technical support (3 days congress)</td><td>1</td><td>₹3,000</td><td>₹1,639</td><td>₹2,000</td></tr>
+        <tr><td>11</td><td>Bug fixes &amp; hotfix buffer during event</td><td>1</td><td>₹1,539</td><td>₹800</td><td>₹739</td></tr>
+        <tr class="subtotal-row"><td colspan="3"><strong>Subtotal C — Technical Assurance</strong></td><td><strong>₹6,539</strong></td><td><strong>₹3,639</strong></td><td><strong>₹4,739</strong></td></tr>
+        <tr class="total-row"><td colspan="3"><strong>Phase 1 Total (A + B + C)</strong></td><td><strong>₹40,000</strong></td><td><strong>₹60,000</strong></td><td><strong>₹88,000</strong></td></tr>
+        <tr class="subtotal-row"><td colspan="6"><strong>Phase 2 — Personnel &amp; Operational Support</strong></td></tr>
+        <tr><td>12</td><td>Data Analyst — usage analysis &amp; reporting</td><td>2</td><td>₹6,000</td><td>₹7,500</td><td>₹12,000</td></tr>
+        <tr><td>13</td><td>Observer / field coordinator</td><td>2</td><td>₹5,000</td><td>₹6,000</td><td>₹10,000</td></tr>
+        <tr><td>14</td><td>Technical documentation specialist</td><td>2</td><td>₹4,000</td><td>₹4,500</td><td>₹8,000</td></tr>
+        <tr><td>15</td><td>User experience reviewer</td><td>2</td><td>₹3,000</td><td>₹3,500</td><td>₹6,500</td></tr>
+        <tr><td>16</td><td>Event-day helpdesk support</td><td>2</td><td>₹4,000</td><td>₹5,500</td><td>₹8,500</td></tr>
+        <tr><td>17</td><td>Communications &amp; delegate liaison</td><td>2</td><td>₹2,000</td><td>₹2,000</td><td>₹5,000</td></tr>
+        <tr class="subtotal-row"><td colspan="3"><strong>Phase 2 Total</strong></td><td><strong>₹24,000</strong></td><td><strong>₹29,000</strong></td><td><strong>₹30,000</strong></td></tr>
+        <tr class="subtotal-row"><td colspan="3"><strong>Subtotal — Allocated Expenditure</strong></td><td><strong>₹64,000</strong></td><td><strong>₹89,000</strong></td><td><strong>₹1,18,000</strong></td></tr>
+        <tr class="reserve-row"><td>18</td><td><strong>Contingency Reserve</strong> — unutilized buffer</td><td>—</td><td>₹11,000</td><td><strong>₹11,000</strong></td><td>₹12,000</td></tr>
+        <tr class="total-row"><td colspan="3"><strong>GRAND TOTAL</strong></td><td><strong>₹75,000</strong></td><td><strong>₹1,00,000</strong></td><td><strong>₹1,30,000</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:9pt;color:var(--muted)">USD figures rounded at ₹85/USD. Domain registration (Item 5) per registrar quote — see Annexure A. Phase 1 total is the exact sum of Subtotals A + B + C.</p>
+
+    <div class="page-footer">AYURDISHA Infrastructure Budget · September 2026 · Page 5</div>
+  </section>
+
+  <section class="content-page">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <h2>Fund Allocation &amp; Cost Scenarios</h2>
+    </div>
+
+    <h3>4.1 Fund Allocation Summary — Recommended Scenario (★)</h3>
+    <table>
+      <thead>
+        <tr><th>Line Item</th><th>Amount (INR)</th><th>Amount (USD)</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>A.</strong> Cloud &amp; Infrastructure (Items 1–7)</td><td>₹26,361</td><td>~$310</td><td>Allocated</td></tr>
+        <tr><td><strong>B.</strong> Software Engineering &amp; Web Development (Items 8a–8e)</td><td>₹30,000</td><td>~$353</td><td>Allocated</td></tr>
+        <tr><td><strong>C.</strong> Technical Assurance — congress-week (Items 9–11)</td><td>₹3,639</td><td>~$43</td><td>Allocated</td></tr>
+        <tr class="subtotal-row"><td><strong>Phase 1 Total (A + B + C)</strong></td><td><strong>₹60,000</strong></td><td><strong>~$706</strong></td><td>Allocated</td></tr>
+        <tr><td>Phase 2 — Personnel &amp; Operational Support (Items 12–17)</td><td>₹29,000</td><td>~$341</td><td>Allocated</td></tr>
+        <tr class="subtotal-row"><td><strong>Total Allocated Expenditure</strong></td><td><strong>₹89,000</strong></td><td><strong>~$1,047</strong></td><td>—</td></tr>
+        <tr class="reserve-row"><td>Contingency Reserve — unforeseen technical and operational requirements</td><td>₹11,000</td><td>~$129</td><td><strong>Reserve — not yet allocated</strong></td></tr>
+        <tr class="total-row"><td><strong>Total Approved Budget</strong></td><td><strong>₹1,00,000</strong></td><td><strong>~$1,176</strong></td><td><strong>Fully allocated</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note-box">
+      The contingency reserve is held for unforeseen technical and operational requirements such as unexpected traffic spikes, additional API quota, emergency contractor support, unplanned personnel coverage, or security remediation. Release requires technical lead approval and committee notification.
+    </div>
+
+    <h3>4.2 Scenario Descriptions</h3>
+    <table>
+      <thead><tr><th>Scenario</th><th>Total</th><th>Profile &amp; Risk</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Minimum — ₹75,000</strong></td>
+          <td>~$882</td>
+          <td>Essential cloud upgrades and domain registration; reduced platform scope; minimal personnel. <em>Risk: Moderate</em> — limited assurance for peak congress load.</td>
+        </tr>
+        <tr class="subtotal-row">
+          <td><strong>Recommended ★ — ₹1,00,000</strong></td>
+          <td>~$1,176</td>
+          <td>Full premium cloud stack, platform development, load testing, security review, on-call support, and congress personnel team. <em>Risk: Low</em> — aligns with professional event technology standards.</td>
+        </tr>
+        <tr>
+          <td><strong>Maximum — ₹1,30,000</strong></td>
+          <td>~$1,529</td>
+          <td>Enterprise-grade buffers, extended testing, full-week support, expanded personnel. <em>Risk: Very low</em> — suitable for record attendance or national media coverage.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-footer">AYURDISHA Infrastructure Budget · September 2026 · Page 6</div>
+  </section>
+
+  <section class="content-page">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <h2>Timeline &amp; Committee Decision</h2>
+    </div>
+
+    <h3>5.1 Implementation Timeline</h3>
+    <table class="timeline-table">
+      <thead><tr><th>Phase</th><th>Timing</th><th>Action</th><th>Est. Cost (Recommended)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Immediate</td>
+          <td>September 2026</td>
+          <td>Register ayurdisha.ai domain; upgrade Firebase to Blaze; initiate security audit</td>
+          <td>₹7,261 (domain + audit) + usage-based</td>
+        </tr>
+        <tr>
+          <td>Platform build</td>
+          <td>8–10 weeks before congress</td>
+          <td>Software engineering sprint (Subtotal B); UX review; documentation draft</td>
+          <td>~₹30,000</td>
+        </tr>
+        <tr>
+          <td>Pre-registration</td>
+          <td>6–8 weeks before congress</td>
+          <td>Activate Vercel Pro, Resend Pro; complete load test (in Subtotal B)</td>
+          <td>~₹18,000 (Subtotal A services)</td>
+        </tr>
+        <tr>
+          <td>Registration open</td>
+          <td>4 weeks before congress</td>
+          <td>Penetration test; staff training; backup/DR verification</td>
+          <td>Included in Subtotal B</td>
+        </tr>
+        <tr>
+          <td>Congress week</td>
+          <td>Event dates (3 days)</td>
+          <td>On-call support; helpdesk active; monitoring live (Subtotal C)</td>
+          <td>~₹3,639 + Phase 2 personnel</td>
+        </tr>
+        <tr>
+          <td>Post-event</td>
+          <td>Within 2 weeks after</td>
+          <td>Data analyst report; downgrade Vercel; final Firebase reconciliation</td>
+          <td>~₹8,000</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>5.2 Committee Decision Requested</h3>
+    <ol>
+      <li><strong>Approve total infrastructure budget of ₹1,00,000 (~$1,176 USD)</strong> for the Recommended scenario</li>
+      <li><strong>Authorize domain registration (ayurdisha.ai)</strong> and <strong>Firebase Blaze / Vercel Pro</strong> procurement before public registration opens</li>
+      <li><strong>Approve contingency reserve of ₹11,000</strong> for unforeseen technical and operational requirements, releasable on technical lead recommendation</li>
+      <li><strong>Authorize technical team</strong> to engage platform development, load testing, security review, and congress personnel upon approval</li>
+    </ol>
+
+    <div class="page-footer">AYURDISHA Infrastructure Budget · September 2026 · Page 7</div>
+  </section>
+
+  <section class="content-page">
+    <div class="section-header">
+      <div class="section-num">A</div>
+      <h2>Annexure A — Domain Registration Quote</h2>
+    </div>
+
+    <p>Registrar quote for the official congress domain <strong>ayurdisha.ai</strong>, obtained September 2026. First-year registration: <strong>₹4,760.95</strong> (budget line item rounded to <strong>₹4,761</strong>).</p>
+
+    <img class="annexure-img" src="budget/domain-ayurdisha-ai.jpg" alt="Registrar quote for ayurdisha.ai domain — ₹4,760.95 first year" />
+
+    <p style="font-size:9pt;color:var(--muted)">Source: Domain registrar pricing page. Budget allocation includes first-year registration only; renewal to be planned separately for subsequent years.</p>
+
+    <div class="page-footer">AYURDISHA Infrastructure Budget · September 2026 · Page 8</div>
+  </section>
+
+  <section class="content-page">
+    <div class="section-header">
+      <div class="section-num">B</div>
+      <h2>Annexure B — Application Screenshots</h2>
+    </div>
+
+    <p>Production preview of the AYURDISHA Meet the Mentors platform at <strong>https://ayushmarg.vercel.app</strong>, captured September 2026 for committee review.</p>
+
+    <div class="screenshot-grid">
+      <figure class="screenshot-item">
+        <img src="budget/app-landing.png" alt="AYURDISHA landing page and hero section" />
+        <figcaption><strong>Landing page / hero</strong>Delegate introduction and Meet the Mentors overview</figcaption>
+      </figure>
+      <figure class="screenshot-item">
+        <img src="budget/app-knowledge.png" alt="AYURDISHA Knowledge section with career pods" />
+        <figcaption><strong>Knowledge section</strong>Career pods and thematic journal themes</figcaption>
+      </figure>
+      <figure class="screenshot-item">
+        <img src="budget/app-gemini.png" alt="Google Gemini journal search explainer modal" />
+        <figcaption><strong>Google Gemini promo</strong>Journal and evidence search powered by Gemini</figcaption>
+      </figure>
+      <figure class="screenshot-item">
+        <img src="budget/app-hall.png" alt="The hall mentor cluster overview" />
+        <figcaption><strong>The hall</strong>Mentor cluster overview and delegate experience zone</figcaption>
+      </figure>
+    </div>
+
+    <div class="page-footer">AYURDISHA Infrastructure Budget · September 2026 · Page 9</div>
+  </section>
+
+  <section class="content-page">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <h2>Prepared By</h2>
+    </div>
+
+    <table class="prepared-table" style="margin-top:20px">
+      <tbody>
+        <tr><td>Document</td><td>Infrastructure Budget — AYURDISHA Meet the Mentors</td></tr>
+        <tr><td>Prepared by</td><td>AYURDISHA Technical Team, World Ayurveda Foundation</td></tr>
+        <tr><td>Organization</td><td>World Ayurveda Foundation</td></tr>
+        <tr><td>Programme</td><td>AYURDISHA — Meet the Mentors Experience Zone</td></tr>
+        <tr><td>Application URL</td><td>https://ayushmarg.vercel.app</td></tr>
+        <tr><td>Planned Domain</td><td>ayurdisha.ai</td></tr>
+        <tr><td>Backend</td><td>Google Firestore (ayurdisha-4917b), Vercel Serverless, Gemini API</td></tr>
+        <tr><td>Prepared for</td><td>World Ayurveda Foundation — Congress Organising Committee</td></tr>
+        <tr><td>Date</td><td>September 2026</td></tr>
+      </tbody>
+    </table>
+
+    <div class="footer-block">
+      <p><em>This document is intended for internal committee review. Cost estimates are based on published provider pricing, vendor quotes, and projected usage for the 11th World Ayurveda Congress; actual charges may vary with attendance and usage patterns. The contingency reserve ensures professional fund management and operational flexibility during the event period.</em></p>
+    </div>
+
+    <div class="page-footer">AYURDISHA Infrastructure Budget · September 2026 · Page 10</div>
+  </section>
+
+</div>
+
+<script>
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () {
+      document.documentElement.setAttribute('data-fonts-ready', 'true');
+    });
+  }
+</script>
+</body>
+</html>

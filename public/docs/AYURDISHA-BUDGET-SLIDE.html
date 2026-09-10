@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infrastructure Budget — AYURDISHA Meet the Mentors</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --forest: #1B4332;
+      --forest-deep: #0F2A1F;
+      --cream: #F5EBE0;
+      --gold: #D4A84B;
+      --oak: #C4A484;
+      --ink: #1A2E24;
+      --muted: #5C6B62;
+      --line: #D9CBB8;
+    }
+    @page { size: 13.333in 7.5in landscape; margin: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 13.333in;
+      height: 7.5in;
+      overflow: hidden;
+    }
+    body {
+      font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+    }
+    .slide {
+      width: 13.333in;
+      height: 7.5in;
+      padding: 0.55in 0.75in 0.5in;
+      display: flex;
+      flex-direction: column;
+      background: var(--cream);
+    }
+    .slide-header { flex-shrink: 0; margin-bottom: 0.28in; }
+    .eyebrow {
+      font-size: 10pt;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 6pt;
+    }
+    h1 {
+      font-family: Fraunces, Georgia, serif;
+      font-size: 30pt;
+      font-weight: 700;
+      color: var(--forest-deep);
+      line-height: 1.15;
+      max-width: 11.5in;
+    }
+    .subtitle {
+      font-size: 13pt;
+      color: var(--muted);
+      margin-top: 8pt;
+      font-weight: 600;
+    }
+    .gold-line {
+      width: 0.75in;
+      height: 3px;
+      background: var(--gold);
+      margin-top: 12pt;
+    }
+    .slide-body { flex: 1; display: flex; flex-direction: column; gap: 14pt; }
+    .budget-total {
+      display: inline-block;
+      background: var(--forest-deep);
+      color: var(--gold);
+      font-family: Fraunces, Georgia, serif;
+      font-size: 17pt;
+      font-weight: 700;
+      padding: 10pt 28pt;
+      border-radius: 6pt;
+      align-self: flex-start;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13pt;
+    }
+    th {
+      background: var(--forest-deep);
+      color: #fff;
+      text-align: left;
+      padding: 9pt 14pt;
+      font-weight: 700;
+      font-size: 12pt;
+    }
+    th:last-child { text-align: right; width: 2.2in; }
+    td {
+      padding: 8pt 14pt;
+      border-bottom: 1px solid var(--line);
+      vertical-align: middle;
+    }
+    tr:nth-child(even):not(.highlight-row) td { background: #FAF5EE; }
+    tr:nth-child(odd):not(.highlight-row) td { background: var(--cream); }
+    .highlight-row td {
+      background: #F0E4C8 !important;
+      font-weight: 700;
+    }
+    .amount {
+      text-align: right;
+      color: var(--forest);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .notes {
+      font-size: 9.5pt;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .scenarios {
+      font-size: 11pt;
+      color: var(--forest-deep);
+      font-weight: 600;
+      padding: 8pt 14pt;
+      background: #EDE4D4;
+      border-left: 4px solid var(--gold);
+      border-radius: 0 4pt 4pt 0;
+    }
+    .slide-footer {
+      flex-shrink: 0;
+      display: flex;
+      justify-content: space-between;
+      padding-top: 10pt;
+      border-top: 1px solid var(--line);
+      font-size: 8pt;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <section class="slide">
+    <div class="slide-header">
+      <p class="eyebrow">Investment · Recommended</p>
+      <h1>Infrastructure Budget — AYURDISHA Meet the Mentors</h1>
+      <p class="subtitle">11th World Ayurveda Congress · Bhubaneswar 2026</p>
+      <div class="gold-line"></div>
+    </div>
+    <div class="slide-body">
+      <div class="budget-total">Total: ₹1,00,000 (Recommended)</div>
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Amount</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>A. Cloud & Infrastructure</td>
+              <td class="amount">₹26,361</td>
+            </tr>
+            <tr>
+              <td>B. Software Engineering & Web Development</td>
+              <td class="amount">₹30,000</td>
+            </tr>
+            <tr>
+              <td>C. Technical Assurance (congress-week)</td>
+              <td class="amount">₹3,639</td>
+            </tr>
+            <tr class="highlight-row">
+              <td><strong>Phase 1 Total</strong></td>
+              <td class="amount"><strong>₹60,000</strong></td>
+            </tr>
+            <tr>
+              <td>Phase 2 — Personnel</td>
+              <td class="amount">₹29,000</td>
+            </tr>
+            <tr>
+              <td>Contingency Reserve</td>
+              <td class="amount">₹11,000</td>
+            </tr>
+            <tr class="highlight-row">
+              <td><strong>GRAND TOTAL</strong></td>
+              <td class="amount"><strong>₹1,00,000</strong></td>
+            </tr>
+        </tbody>
+      </table>
+      <p class="notes">Domain ayurdisha.ai (GoDaddy ₹4,761) · Firebase Blaze · Vercel Pro · Resend OTP email</p>
+      <p class="scenarios">Scenarios — Min ₹75,000 · Rec ₹1,00,000 · Max ₹1,25,000</p>
+    </div>
+    <div class="slide-footer">
+      <span>AYURDISHA · Infrastructure Budget</span>
+      <span>World Ayurveda Foundation</span>
+    </div>
+  </section>
+</body>
+</html>

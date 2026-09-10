@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AYURDISHA — Meet the Mentors · Committee Presentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --forest: #1B4332;
+      --forest-deep: #0F2A1F;
+      --forest-mid: #2D6A4F;
+      --cream: #F5EBE0;
+      --sand: #EDE4D4;
+      --gold: #D4A84B;
+      --oak: #C4A484;
+      --ink: #1A2E24;
+      --muted: #5C6B62;
+      --line: #D9CBB8;
+      --white: #FFFEFB;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      caret-color: transparent;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--forest-deep);
+    }
+
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      padding: 48px 64px 56px;
+      background: var(--cream);
+      overflow: hidden;
+    }
+
+    .slide.active { display: flex; }
+
+    .slide-dark {
+      background: linear-gradient(155deg, var(--forest-deep) 0%, var(--forest) 50%, var(--forest-mid) 100%);
+      color: var(--white);
+    }
+
+    .slide-header {
+      flex-shrink: 0;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .slide-dark .eyebrow { color: var(--oak); }
+
+    h1, h2 {
+      font-family: Fraunces, "Source Serif 4", Georgia, serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    h1 { font-size: clamp(2rem, 4.5vw, 3.4rem); }
+    h2 { font-size: clamp(1.6rem, 3.2vw, 2.4rem); color: var(--forest-deep); }
+    .slide-dark h2 { color: var(--white); }
+
+    .gold-line {
+      width: 72px;
+      height: 3px;
+      background: var(--gold);
+      margin: 16px 0 0;
+    }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 0;
+    }
+
+    .slide-body.split {
+      flex-direction: row;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .slide-body.split .text-col { flex: 1; min-width: 0; }
+    .slide-body.split .img-col { flex: 1.1; min-width: 0; display: flex; justify-content: center; }
+
+    ul.bullets {
+      list-style: none;
+      font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+      line-height: 1.55;
+    }
+
+    ul.bullets li {
+      position: relative;
+      padding-left: 1.4em;
+      margin-bottom: 0.65em;
+    }
+
+    ul.bullets li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .slide-dark ul.bullets li::before { background: var(--oak); }
+
+    .screenshot {
+      max-width: 100%;
+      max-height: min(52vh, 480px);
+      border-radius: 10px;
+      border: 2px solid var(--line);
+      box-shadow: 0 12px 40px rgba(15, 42, 31, 0.18);
+      object-fit: contain;
+      background: var(--white);
+    }
+
+    .domain-shot {
+      max-height: min(48vh, 420px);
+      border-radius: 8px;
+      border: 2px solid rgba(212, 168, 75, 0.4);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Title slide */
+    .title-slide {
+      justify-content: center;
+      text-align: left;
+    }
+
+    .title-slide h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      color: var(--white);
+      margin-top: 8px;
+    }
+
+    .title-slide .program {
+      font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+      color: var(--sand);
+      margin-top: 20px;
+      font-weight: 400;
+    }
+
+    .title-slide .event {
+      font-family: Fraunces, Georgia, serif;
+      font-size: clamp(1rem, 1.8vw, 1.35rem);
+      color: var(--gold);
+      margin-top: 36px;
+    }
+
+    .title-slide .org {
+      margin-top: auto;
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--oak);
+    }
+
+    /* Workflow */
+    .workflow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .wf-step {
+      flex: 1 1 140px;
+      max-width: 180px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px 14px;
+      text-align: center;
+      position: relative;
+    }
+
+    .wf-step .num {
+      font-family: Fraunces, serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .wf-step .label {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--forest-deep);
+      margin-top: 6px;
+    }
+
+    .wf-step .desc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.35;
+    }
+
+    .wf-staff {
+      margin-top: 28px;
+      padding: 18px 22px;
+      background: rgba(27, 67, 50, 0.08);
+      border-left: 4px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .wf-staff h3 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--forest);
+      margin-bottom: 8px;
+    }
+
+    .wf-staff p {
+      font-size: 1rem;
+      color: var(--ink);
+    }
+
+    .wf-arrow {
+      display: flex;
+      align-items: center;
+      color: var(--gold);
+      font-size: 1.4rem;
+      font-weight: 700;
+      flex: 0 0 auto;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+    }
+
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      background: var(--forest-deep);
+      color: var(--white);
+      font-weight: 600;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    tr:nth-child(even) td { background: rgba(245, 235, 224, 0.5); }
+
+    .amount { font-weight: 700; color: var(--forest); white-space: nowrap; }
+    .highlight-row td { background: rgba(212, 168, 75, 0.15) !important; font-weight: 700; }
+
+    .budget-total {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 24px;
+      background: var(--forest-deep);
+      color: var(--gold);
+      border-radius: 8px;
+      font-family: Fraunces, serif;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 700;
+    }
+
+    .budget-note {
+      margin-top: 16px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .budget-note a {
+      color: var(--forest);
+      font-weight: 600;
+    }
+
+    /* Live demo */
+    .demo-url {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 20px 36px;
+      background: var(--forest-deep);
+      color: var(--gold);
+      border-radius: 10px;
+      font-family: Fraunces, serif;
+      font-size: clamp(1.3rem, 2.8vw, 2rem);
+      font-weight: 700;
+      text-decoration: none;
+      border: 2px solid rgba(212, 168, 75, 0.5);
+    }
+
+    .demo-sub {
+      margin-top: 20px;
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      color: var(--muted);
+    }
+
+    .qr-hint {
+      margin-top: 28px;
+      font-size: 1rem;
+      color: var(--forest);
+      font-weight: 600;
+    }
+
+    /* Thank you */
+    .thank-you {
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .thank-you h1 {
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      color: var(--white);
+    }
+
+    .thank-you .sub {
+      font-size: clamp(1.1rem, 2vw, 1.45rem);
+      color: var(--sand);
+      margin-top: 24px;
+    }
+
+    .thank-you .questions {
+      margin-top: 48px;
+      font-family: Fraunces, serif;
+      font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+      color: var(--gold);
+    }
+
+    /* Footer nav */
+    .slide-footer {
+      flex-shrink: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .slide-dark .slide-footer {
+      border-top-color: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .progress-dots {
+      position: fixed;
+      bottom: 20px;
+      right: 24px;
+      display: flex;
+      gap: 6px;
+      z-index: 100;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.25);
+      transition: background 0.2s;
+    }
+
+    .dot.active { background: var(--gold); }
+
+    .nav-hint {
+      position: fixed;
+      bottom: 20px;
+      left: 24px;
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.35);
+      letter-spacing: 0.06em;
+      z-index: 100;
+    }
+
+    @media print {
+      html, body { overflow: visible; height: auto; }
+      .deck { height: auto; width: 100%; }
+      .slide {
+        display: flex !important;
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        page-break-after: always;
+        page-break-inside: avoid;
+      }
+      .progress-dots, .nav-hint { display: none !important; }
+    }
+
+    @page {
+      size: landscape;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="deck" id="deck">
+
+    <!-- 1. Title -->
+    <section class="slide slide-dark title-slide active" data-slide="1">
+      <p class="eyebrow">World Ayurveda Foundation</p>
+      <h1>AYURDISHA</h1>
+      <p class="program">Meet the Mentors · Experience Zone</p>
+      <div class="gold-line"></div>
+      <p class="event">11th World Ayurveda Congress · Bhubaneswar 2026</p>
+      <p class="org">Committee Presentation · September 2026</p>
+      <div class="slide-footer">
+        <span>AYURDISHA</span>
+        <span>1 / 16</span>
+      </div>
+    </section>
+
+    <!-- 2. What is AYURDISHA? -->
+    <section class="slide" data-slide="2">
+      <div class="slide-header">
+        <p class="eyebrow">Overview</p>
+        <h2>What is AYURDISHA?</h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="slide-body">
+        <ul class="bullets">
+          <li>A <strong>digital hall</strong> for BAMS mentees at the 11th World Ayurveda Congress — register once, then identify yourself with your WAC registration number on Ask Desk.</li>
+          <li><strong>Mentor Q&amp;A</strong> — submit focused career questions, track answers, and read published guidance from experienced practitioners.</li>
+          <li>An integrated <strong>congress experience zone</strong> connecting delegates, mentors, and organisers before, during, and after the event.</li>
+        </ul>
+      </div>
+      <div class="slide-footer">
+        <span>AYURDISHA · Meet the Mentors</span>
+        <span>2 / 16</span>
+      </div>
+    </section>
+
+    <!-- 3. Who is it for? -->
+    <section class="slide" data-slide="3">
+      <div class="slide-header">
+        <p class="eyebrow">Audience</p>
+        <h2>Who is it for?</h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="slide-body">
+        <ul class="bullets">
+          <li><strong>BAMS students &amp; delegates</strong> — register with email OTP, then enter your WAC registration number on Ask Desk, ask career questions, and follow ticket status.</li>
+          <li><strong>Mentors</strong> — answer curated question clusters; published responses appear on the Stage and Board for all delegates.</li>
+          <li><strong>Staff &amp; organisers</strong> — curation desk, insights dashboard, mentor packs, and delegate lists for real-time congress coordination.</li>
+        </ul>
+      </div>
+      <div class="slide-footer">
+        <span>AYURDISHA · Meet the Mentors</span>
+        <span>3 / 16</span>
+      </div>
+    </section>
+
+    <!-- 4. Workflow -->
+    <section class="slide" data-slide="4">
+      <div class="slide-header">
+        <p class="eyebrow">Journey</p>
+        <h2>How it works</h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="slide-body">
+        <div class="workflow">
+          <div class="wf-step"><div class="num">1</div><div class="label">Register</div><div class="desc">Email OTP (no WAC number yet)</div></div>
+          <div class="wf-arrow">→</div>
+          <div class="wf-step"><div class="num">2</div><div class="label">Enter the Hall</div><div class="desc">Explore zones &amp; mentors</div></div>
+          <div class="wf-arrow">→</div>
+          <div class="wf-step"><div class="num">3</div><div class="label">Ask Desk</div><div class="desc">WAC registration number + question</div></div>
+          <div class="wf-arrow">→</div>
+          <div class="wf-step"><div class="num">4</div><div class="label">Track</div><div class="desc">Follow ticket status</div></div>
+          <div class="wf-arrow">→</div>
+          <div class="wf-step"><div class="num">5</div><div class="label">Knowledge</div><div class="desc">Career guidance by theme</div></div>
+          <div class="wf-arrow">→</div>
+          <div class="wf-step"><div class="num">6</div><div class="label">Stage / Board</div><div class="desc">Published mentor answers</div></div>
+        </div>
+        <div class="wf-staff">
+          <h3>Staff workflow</h3>
+          <p>Curation → Merge similar questions → Mentor answers → Publish to hall &amp; Track</p>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>AYURDISHA · Meet the Mentors</span>
+        <span>4 / 16</span>
+      </div>
+    </section>
+
+    <!-- 5. Digital Hall -->
+    <section class="slide" data-slide="5">
+      <div class="slide-header">
+        <p class="eyebrow">Experience Zone</p>
+        <h2>The Digital Hall</h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="slide-body split">
+        <div class="text-col">
+          <ul class="bullets">
+            <li>Central navigation hub for the congress experience zone.</li>
+            <li>Mentor clusters organised by career theme — PG, clinic, research, service, and more.</li>
+            <li>Quick access to Ask Desk, Knowledge, Track, Stage, and Opportunity Exchange.</li>
+          </ul>
+        </div>
+        <div class="img-col">
+          <img class="screenshot" src="budget/app-hall.png" alt="AYURDISHA digital hall — mentor cluster overview" />
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>AYURDISHA · Meet the Mentors</span>
+        <span>5 / 16</span>
+      </div>
+    </section>
+
+    <!-- 6. Registration & Ask Desk -->
+    <section class="slide" data-slide="6">
+      <div class="slide-header">
+        <p class="eyebrow">Delegate journey</p>
+        <h2>Registration &amp; Ask Desk</h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="slide-body split">
+        <div class="text-col">
+          <ul class="bullets">
+            <li><strong>Register</strong> with institutional email — OTP verification ensures one profile per person. Your WAC registration number is not asked here.</li>
+            <li>Bring your <strong>WAC registration number</strong> to the Ask Desk when you have it — that is how AYURDISHA identifies you.</li>
+            <li><strong>Ask Desk</strong> — one focused career question per submission; option to merge similar questions for broader hall answers.</li>
+          </ul>
+        </div>
+        <div class="img-col">
+          <img class="screenshot" src="budget/app-landing.png" alt="AYURDISHA landing page and registration flow" />
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>AYURDISHA · Meet the Mentors</span>
+        <span>6 / 16</span>
+      </div>
+    </section>
+
+    <!-- 7. Knowledge Hub -->
+    <section class="slide" data-slide="7">
+      <div class="slide-header">
+        <p class="eyebrow">Career guidance</p>
+        <h2>Knowledge Hub</h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="slide-body split">
+        <div class="text-col">
+          <ul class="bullets">
+            <li>Themed career pods — PG admission, private practice, research, AYUSH service, start-ups, and international pathways.</li>
+            <li>Curated guidance articles, journal references, and evidence summaries for each theme.</li>
+            <li>Delegates read evidence first, then submit personal questions at the Ask Desk for mentor answers.</li>
+          </ul>
+        </div>
+        <div class="img-col">
+          <img class="screenshot" src="budget/app-knowledge.png" alt="AYURDISHA Knowledge Hub — career themes" />
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>AYURDISHA · Meet the Mentors</span>
+        <span>7 / 16</span>
+      </div>
+    </section>
+
+    <!-- 8. Staff Tools -->
+    <section class="slide" data-slide="8">
+      <div class="slide-header">
+        <p class="eyebrow">Operations</p>
+        <h2>Staff Tools</h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="slide-body">
+        <ul class="bullets">
+          <li><strong>Curation desk</strong> — review incoming questions, merge similar submissions, assign to mentor clusters, and publish answers.</li>
+          <li><strong>Insights dashboard</strong> — real-time delegate counts, question volume, and theme distribution during congress.</li>
+          <li><strong>Mentor pack</strong> — export curated question batches for offline mentor review and bulk answer import.</li>
+          <li><strong>Delegate list</strong> — searchable registry with registration status, ticket tracking, and in-person shortlist flags.</li>
+        </ul>
+      </div>
+      <div class="slide-footer">
+        <span>AYURDISHA · Meet the Mentors</span>
+        <span>8 / 16</span>
+      </div>
+    </section>
+
+    <!-- 9. Opportunity Exchange & Track -->
+    <section class="slide" data-slide="9">
+      <div class="slide-header">
+        <p class="eyebrow">Engagement</p>
+        <h2>Opportunity Exchange &amp; Track</h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="slide-body">
+        <ul class="bullets">
+          <li><strong>Opportunity Exchange</strong> — congress announcements, fellowships, internships, and career openings shared with registered delegates.</li>
+          <li><strong>Track my answer</strong> — delegates enter their ticket or email to check status and read mentor responses.</li>
+          <li><strong>Stage &amp; Board</strong> — published hall answers visible to all; shortlisted mentees may be invited for in-person sessions.</li>
+          <li>Delegates not shortlisted remain fully connected — same Track page, same WAC registration number, same hall on any device.</li>
+        </ul>
+      </div>
+      <div class="slide-footer">
+        <span>AYURDISHA · Meet the Mentors</span>
+        <span>9 / 16</span>
+      </div>
+    </section>
+
+    <!-- 10. Technology -->
+    <section class="slide" data-slide="10">
+      <div class="slide-header">
+        <p class="eyebrow">Platform</p>
+        <h2>Technology</h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="slide-body">
+        <ul class="bullets">
+          <li><strong>Serverless architecture</strong> — Google Cloud Firestore for data, Vercel for hosting and API functions; no dedicated servers.</li>
+          <li><strong>Secure OTP registration</strong> — transactional email verification with signed HttpOnly session cookies.</li>
+          <li><strong>Multi-staff coordination</strong> — real-time Firestore sync for curation desk, insights, and delegate management.</li>
+          <li><strong>Production-ready</strong> — security rules, App Check, monitoring, and congress-week on-call support planned.</li>
+        </ul>
+      </div>
+      <div class="slide-footer">
+        <span>AYURDISHA · Meet the Mentors</span>
+        <span>10 / 16</span>
+      </div>
+    </section>
+
+    <!-- 11. Domain -->
+    <section class="slide slide-dark" data-slide="11">
+      <div class="slide-header">
+        <p class="eyebrow">Web presence</p>
+        <h2>Domain — ayurdisha.ai</h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="slide-body split">
+        <div class="text-col">
+          <ul class="bullets">
+            <li>Official congress domain registered via <strong>GoDaddy</strong>.</li>
+            <li><strong>ayurdisha.ai</strong> — first year: <strong>₹4,761</strong> (registrar quote on file).</li>
+            <li>DNS cutover planned from preview deployment to production domain before congress.</li>
+            <li>SSL certificate included; CDN via Vercel for global delegate access.</li>
+          </ul>
+        </div>
+        <div class="img-col">
+          <img class="domain-shot" src="budget/domain-ayurdisha-ai.jpg" alt="GoDaddy registrar quote for ayurdisha.ai — ₹4,760.95 first year" />
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>AYURDISHA · Meet the Mentors</span>
+        <span>11 / 16</span>
+      </div>
+    </section>
+
+    <!-- 12. Budget Overview -->
+    <section class="slide" data-slide="12">
+      <div class="slide-header">
+        <p class="eyebrow">Investment</p>
+        <h2>Budget Summary — Overview</h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="slide-body">
+        <div class="budget-total">Total Allocation: ₹1,00,000 (~$1,176 USD)</div>
+        <table style="margin-top: 24px;">
+          <thead>
+            <tr>
+              <th>Scenario</th>
+              <th>Phase 1</th>
+              <th>Phase 2</th>
+              <th>Contingency</th>
+              <th>Total (INR)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Minimum</td>
+              <td class="amount">₹40,000</td>
+              <td class="amount">₹24,000</td>
+              <td class="amount">₹11,000</td>
+              <td class="amount">₹75,000</td>
+            </tr>
+            <tr class="highlight-row">
+              <td>Recommended ★</td>
+              <td class="amount">₹60,000</td>
+              <td class="amount">₹29,000</td>
+              <td class="amount">₹11,000</td>
+              <td class="amount">₹1,00,000</td>
+            </tr>
+            <tr>
+              <td>Maximum</td>
+              <td class="amount">₹88,000</td>
+              <td class="amount">₹30,000</td>
+              <td class="amount">₹12,000</td>
+              <td class="amount">₹1,25,000</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="budget-note">Phase 1: Technical infrastructure &amp; platform development · Phase 2: Personnel &amp; operational support</p>
+      </div>
+      <div class="slide-footer">
+        <span>AYURDISHA · Budget</span>
+        <span>12 / 16</span>
+      </div>
+    </section>
+
+    <!-- 13. Phase 1 Breakdown -->
+    <section class="slide" data-slide="13">
+      <div class="slide-header">
+        <p class="eyebrow">Phase 1 — ₹60,000</p>
+        <h2>Technical Infrastructure &amp; Development</h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="slide-body">
+        <table>
+          <thead>
+            <tr>
+              <th>Subtotal</th>
+              <th>Category</th>
+              <th>Amount (INR)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>A</strong></td>
+              <td>Cloud &amp; Infrastructure — Firebase, Vercel, email, domain, SSL, security</td>
+              <td class="amount">₹26,361</td>
+            </tr>
+            <tr>
+              <td><strong>B</strong></td>
+              <td>Software Engineering &amp; Web Development — design, build, test, deploy</td>
+              <td class="amount">₹30,000</td>
+            </tr>
+            <tr>
+              <td><strong>C</strong></td>
+              <td>Technical Assurance — congress-week monitoring, on-call, hotfix buffer</td>
+              <td class="amount">₹3,639</td>
+            </tr>
+            <tr class="highlight-row">
+              <td></td>
+              <td><strong>Phase 1 Total (A + B + C)</strong></td>
+              <td class="amount">₹60,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="slide-footer">
+        <span>AYURDISHA · Budget</span>
+        <span>13 / 16</span>
+      </div>
+    </section>
+
+    <!-- 14. Phase 2 + Key Items -->
+    <section class="slide" data-slide="14">
+      <div class="slide-header">
+        <p class="eyebrow">Phase 2 + Key Items</p>
+        <h2>Personnel, Contingency &amp; Line Items</h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="slide-body split">
+        <div class="text-col">
+          <table>
+            <thead>
+              <tr><th>Item</th><th>Amount</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Phase 2 — Personnel &amp; operations</td><td class="amount">₹29,000</td></tr>
+              <tr><td>Contingency reserve</td><td class="amount">₹11,000</td></tr>
+              <tr class="highlight-row"><td><strong>Recommended total</strong></td><td class="amount">₹1,00,000</td></tr>
+            </tbody>
+          </table>
+          <p class="budget-note" style="margin-top: 20px;">Full itemised budget: <a href="/docs/INFRASTRUCTURE-BUDGET.pdf">/docs/INFRASTRUCTURE-BUDGET.pdf</a></p>
+        </div>
+        <div class="text-col">
+          <table>
+            <thead>
+              <tr><th>Key line items</th><th>Amount</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Domain — ayurdisha.ai (GoDaddy, 1st year)</td><td class="amount">₹4,761</td></tr>
+              <tr><td>Software engineering fee</td><td class="amount">₹30,000</td></tr>
+              <tr><td>Firebase Blaze (Firestore)</td><td class="amount">₹5,500</td></tr>
+              <tr><td>Vercel Pro — hosting &amp; API</td><td class="amount">₹7,500</td></tr>
+              <tr><td>Resend / SendGrid — OTP email</td><td class="amount">₹1,800</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>AYURDISHA · Budget</span>
+        <span>14 / 16</span>
+      </div>
+    </section>
+
+    <!-- 15. Live Demo -->
+    <section class="slide" data-slide="15">
+      <div class="slide-header">
+        <p class="eyebrow">Demonstration</p>
+        <h2>Live Demo</h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="slide-body" style="align-items: center; text-align: center;">
+        <a class="demo-url" href="https://ayushmarg.vercel.app" target="_blank" rel="noopener">https://ayushmarg.vercel.app</a>
+        <p class="demo-sub">Production preview — register, explore the hall, and try Ask Desk</p>
+        <p class="qr-hint">Scan or visit for live demonstration</p>
+        <p class="demo-sub" style="margin-top: 12px;">Planned production domain: <strong>ayurdisha.ai</strong></p>
+      </div>
+      <div class="slide-footer">
+        <span>AYURDISHA · Meet the Mentors</span>
+        <span>15 / 16</span>
+      </div>
+    </section>
+
+    <!-- 16. Thank You -->
+    <section class="slide slide-dark thank-you" data-slide="16">
+      <h1>Thank You</h1>
+      <div class="gold-line" style="margin: 24px auto;"></div>
+      <p class="sub">World Ayurveda Foundation</p>
+      <p class="sub">AYURDISHA Technical Team</p>
+      <p class="questions">Questions?</p>
+      <div class="slide-footer" style="width: 100%; margin-top: auto;">
+        <span>11th World Ayurveda Congress · Bhubaneswar 2026</span>
+        <span>16 / 16</span>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="progress-dots" id="dots"></div>
+  <div class="nav-hint">← → arrow keys · Home · End</div>
+
+  <script>
+    (function () {
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const dotsEl = document.getElementById('dots');
+      let current = 0;
+
+      slides.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goTo(i));
+        dotsEl.appendChild(dot);
+      });
+
+      const dots = Array.from(dotsEl.children);
+
+      function goTo(index) {
+        if (index < 0 || index >= slides.length) return;
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = index;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') {
+          e.preventDefault();
+          goTo(current + 1);
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') {
+          e.preventDefault();
+          goTo(current - 1);
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          goTo(0);
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          goTo(slides.length - 1);
+        }
+      });
+
+      let touchStartX = 0;
+      document.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+      document.addEventListener('touchend', (e) => {
+        const dx = e.changedTouches[0].screenX - touchStartX;
+        if (Math.abs(dx) > 50) goTo(dx < 0 ? current + 1 : current - 1);
+      }, { passive: true });
+    })();
+  </script>
+</body>
+</html>

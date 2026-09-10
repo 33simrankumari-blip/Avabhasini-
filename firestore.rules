@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // All reads and writes go through the Node Admin SDK on /api/aym-store.
+    // Clients must never use the Firebase browser SDK against this project.
+    // Deny every client request as defense-in-depth if a SDK is added later.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

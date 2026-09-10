@@ -1,0 +1,28 @@
+{
+  "name": "ayurmarg-preview",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "node scripts/write-sitemap.js && vite build",
+    "sitemap": "node scripts/write-sitemap.js",
+    "preview": "vite preview",
+    "migrate:blob-to-firestore": "node scripts/migrate-blob-to-firestore.js"
+  },
+  "dependencies": {
+    "@vercel/blob": "^2.8.0",
+    "firebase-admin": "^14.3.0",
+    "lucide-react": "^0.525.0",
+    "nodemailer": "^9.0.5",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.18.3",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.7.0",
+    "pptxgenjs": "^4.0.1",
+    "vite": "^7.0.0"
+  }
+}
