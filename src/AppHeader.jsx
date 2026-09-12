@@ -1,6 +1,6 @@
 import React, { useCallback, useId, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Lock, Unlock, Search } from "lucide-react";
+import { Menu, X, Lock, Unlock, Search, Ticket, Send, ShieldCheck } from "lucide-react";
 import useFocusTrap from "./useFocusTrap.js";
 import GlobalSearch from "./components/GlobalSearch.jsx";
 
@@ -51,7 +51,7 @@ export function SimpleHeader(props) {
   return <AppHeader {...props} />;
 }
 
-export default function AppHeader({ staff, onStaffClick }) {
+export default function AppHeader({ staff, onStaffClick, onGoTab }) {
   const [open, setOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const menuId = useId();
@@ -63,16 +63,30 @@ export default function AppHeader({ staff, onStaffClick }) {
     { to: "/", label: "Home" },
     { to: "/about", label: "About" },
     { to: "/mentors", label: "Mentors" },
-    { to: "/programs", label: "Programs" },
-    { to: "/events", label: "Events" },
+    { to: "/programs", label: "Programme" },
+    { to: "/events", label: "Event" },
     { to: "/resources", label: "Resources" },
     { to: "/contact", label: "Contact" },
   ];
 
   function isActive(path) {
-    if (path === "/") return location.pathname === "/" && !location.hash;
+    if (path === "/") return location.pathname === "/" && (!location.hash || location.hash === "#intro");
     return location.pathname.startsWith(path);
   }
+
+  const handleTrackClick = (e) => {
+    if (onGoTab) {
+      onGoTab("track");
+    }
+  };
+
+  const handleStaffWorkspaceClick = () => {
+    if (staff && onGoTab) {
+      onGoTab("staff");
+    } else if (onStaffClick) {
+      onStaffClick();
+    }
+  };
 
   return (
     <>
@@ -111,19 +125,34 @@ export default function AppHeader({ staff, onStaffClick }) {
                 <span className="aym-desktop-only">Search</span>
               </button>
 
-              <Link to={{ pathname: "/", hash: "#ask" }} className="aym-btn aym-btn-primary aym-desktop-only">
-                Ask a Question
+              <Link
+                to={{ pathname: "/", hash: "#track" }}
+                onClick={handleTrackClick}
+                className="aym-btn aym-btn-secondary aym-desktop-only aym-track-btn"
+                aria-label="Track My Answer"
+              >
+                <Ticket size={15} aria-hidden="true" style={{ marginRight: 6 }} />
+                <span>Track My Answer</span>
+              </Link>
+
+              <Link
+                to={{ pathname: "/", hash: "#ask" }}
+                className="aym-btn aym-btn-primary aym-desktop-only"
+              >
+                <Send size={15} aria-hidden="true" style={{ marginRight: 6 }} />
+                <span>Ask a Question</span>
               </Link>
 
               {onStaffClick && (
                 <button
                   type="button"
-                  className="aym-btn aym-staff-chip"
-                  onClick={onStaffClick}
-                  aria-label={staff ? "Leave staff mode" : "Enter staff mode"}
+                  className={`aym-btn aym-staff-chip ${staff ? "aym-staff-chip-active" : ""}`}
+                  onClick={staff ? handleStaffWorkspaceClick : onStaffClick}
+                  aria-label={staff ? "Open Staff Portal" : "Enter staff login"}
+                  title={staff ? "Authenticated Staff Portal" : "Staff Login"}
                 >
-                  {staff ? <Unlock size={14} aria-hidden="true" /> : <Lock size={14} aria-hidden="true" />}
-                  <span className="aym-desktop-only">{staff ? "Leave staff" : "Staff"}</span>
+                  {staff ? <ShieldCheck size={15} aria-hidden="true" /> : <Lock size={14} aria-hidden="true" />}
+                  <span className="aym-desktop-only">{staff ? "Staff Portal" : "Staff"}</span>
                 </button>
               )}
 
@@ -154,13 +183,41 @@ export default function AppHeader({ staff, onStaffClick }) {
                 {item.label}
               </Link>
             ))}
-            <Link
-              to={{ pathname: "/", hash: "#ask" }}
-              className="aym-drawer-link aym-drawer-cta"
-              onClick={close}
-            >
-              Ask a Question
-            </Link>
+            
+            <div className="aym-drawer-actions">
+              <Link
+                to={{ pathname: "/", hash: "#track" }}
+                className="aym-drawer-link aym-drawer-track"
+                onClick={(e) => { handleTrackClick(e); close(); }}
+              >
+                <Ticket size={18} aria-hidden="true" style={{ marginRight: 8 }} />
+                <span>Track My Answer</span>
+              </Link>
+              
+              <Link
+                to={{ pathname: "/", hash: "#ask" }}
+                className="aym-drawer-link aym-drawer-cta"
+                onClick={close}
+              >
+                <Send size={18} aria-hidden="true" style={{ marginRight: 8 }} />
+                <span>Ask a Question</span>
+              </Link>
+
+              {onStaffClick && (
+                <button
+                  type="button"
+                  className="aym-drawer-link aym-drawer-staff"
+                  onClick={() => {
+                    close();
+                    if (staff) handleStaffWorkspaceClick();
+                    else onStaffClick();
+                  }}
+                >
+                  {staff ? <ShieldCheck size={18} aria-hidden="true" style={{ marginRight: 8 }} /> : <Lock size={18} aria-hidden="true" style={{ marginRight: 8 }} />}
+                  <span>{staff ? "Staff Portal (Active)" : "Staff Login"}</span>
+                </button>
+              )}
+            </div>
           </nav>
         </NavDrawer>
       </header>

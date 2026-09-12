@@ -4917,5 +4917,186 @@ body { margin: 0; background: var(--cream); }
 .aym-search-box input { padding-left: 40px; }
 .aym-filter-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
 
+/* Institutional Staff Workspace & Action Cards */
+.aym-staff-workspace-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+.aym-staff-workspace-hero {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 4px 16px rgba(30, 58, 43, 0.04);
+}
+.aym-eyebrow-staff {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #FAF6ED;
+  color: var(--gold-dark);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.aym-staff-workspace-title {
+  font-size: clamp(1.75rem, 3.5vw, 2.4rem);
+  color: var(--forest);
+  margin-bottom: 0.75rem;
+}
+.aym-staff-workspace-lead {
+  font-size: 1.05rem;
+  color: var(--muted);
+  max-width: 48rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+.aym-staff-workspace-meta-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+.aym-staff-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--forest);
+  background: var(--sand);
+  padding: 6px 12px;
+  border-radius: 100px;
+  border: 1px solid var(--line);
+}
+.aym-staff-logout-btn {
+  margin-left: auto;
+  color: #8B2020;
+  font-weight: 600;
+}
+.aym-staff-logout-btn:hover {
+  background: #FDF2F2;
+}
+
+.aym-staff-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.aym-action-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.aym-action-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(30, 58, 43, 0.08);
+  border-color: var(--gold);
+}
+.aym-action-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+}
+.aym-action-card-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: #FAF6ED;
+  color: var(--forest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(194, 139, 56, 0.25);
+}
+.aym-action-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--forest);
+  margin-bottom: 0.5rem;
+}
+.aym-action-card-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+.aym-action-card-foot {
+  margin-top: auto;
+}
+.aym-action-card-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.aym-badge-gold {
+  background: #FAF6ED;
+  color: var(--gold-dark);
+  border: 1px solid rgba(194, 139, 56, 0.3);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.aym-staff-chip-active {
+  background: #FAF6ED !important;
+  color: var(--gold-dark) !important;
+  border-color: var(--gold) !important;
+}
+.aym-track-btn {
+  border-color: var(--gold) !important;
+  color: var(--forest-deep) !important;
+  background: #FAF6ED !important;
+}
+.aym-track-btn:hover {
+  background: #F3EBD9 !important;
+}
+.aym-drawer-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+.aym-drawer-track {
+  background: #FAF6ED;
+  color: var(--forest-deep);
+  border: 1px solid var(--gold);
+  font-weight: 600;
+}
+.aym-drawer-staff {
+  background: var(--sand);
+  color: var(--forest);
+  border: 1px solid var(--line);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  text-align: left;
+}
+
+
 
 

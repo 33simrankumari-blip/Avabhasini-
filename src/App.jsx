@@ -33,6 +33,8 @@ import ContactPage from "./pages/ContactPage.jsx";
 import { PrivacyRoute, TermsRoute, DisclaimerRoute } from "./pages/LegalPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
+import StaffWorkspace from "./StaffWorkspace.jsx";
+
 
 const MentorsDirectory = lazy(() => import("./MentorsDirectory.jsx"));
 const MentorProfile = lazy(() => import("./MentorProfile.jsx"));
@@ -140,7 +142,7 @@ const K_Q = "aym:q:";
 const K_CLUSTERS = "aym:clusters";
 const K_CONFIG = "aym:config";
 const LS_PREFIX = "aym-store:";
-const APP_TAB_IDS = ["intro", "hall", "mentors", "register", "ask", "pods", "exchange", "track", "board", "curate", "insights", "pack", "podcast"];
+const APP_TAB_IDS = ["intro", "hall", "mentors", "register", "ask", "pods", "exchange", "track", "board", "staff", "curate", "insights", "pack", "podcast"];
 
 function tabFromHash(hash) {
   const raw = hash !== undefined && hash !== null
@@ -150,8 +152,16 @@ function tabFromHash(hash) {
   return APP_TAB_IDS.includes(h) ? h : null;
 }
 
-/** `/` and `/#intro` are the cinematic landing; other hashes are in-app tabs. */
+/** `/` and `/#intro` are the cinematic landing; other hashes & staff paths are in-app tabs. */
 function tabFromUrl(pathname, hash) {
+  const p = String(pathname || "/").replace(/\/+$/, "") || "/";
+  if (p === "/staff" || p === "/staff/login" || p === "/staff/workspace") return "staff";
+  if (p === "/staff/curation" || p === "/staff/curate") return "curate";
+  if (p === "/staff/theme-stage" || p === "/staff/board") return "board";
+  if (p === "/staff/insights") return "insights";
+  if (p === "/staff/mentor-pack" || p === "/staff/pack") return "pack";
+  if (p === "/track-answer") return "track";
+
   if (parseMentorPath(pathname).onMentors) return "mentors";
   const h = tabFromHash(hash);
   if (h && h !== "intro") return h;
@@ -165,6 +175,15 @@ const LEGAL_PATHS = {
   "/disclaimer": "disclaimer",
 };
 
+const STAFF_PATHS = {
+  "/staff": "staff",
+  "/staff/login": "staff",
+  "/staff/curation": "curate",
+  "/staff/theme-stage": "board",
+  "/staff/insights": "insights",
+  "/staff/mentor-pack": "pack",
+};
+
 function parseMentorPath(pathname) {
   const p = String(pathname || "/").replace(/\/+$/, "") || "/";
   if (p === "/mentors") return { onMentors: true, mentorId: null };
@@ -176,11 +195,14 @@ function parseMentorPath(pathname) {
 function parseAppPath(pathname) {
   const p = String(pathname || "/").replace(/\/+$/, "") || "/";
   if (LEGAL_PATHS[p]) return { kind: "legal", page: LEGAL_PATHS[p] };
+  if (STAFF_PATHS[p]) return { kind: "staff", tab: STAFF_PATHS[p] };
+  if (p === "/track-answer") return { kind: "app" };
   const mentors = parseMentorPath(p);
   if (mentors.onMentors) return { kind: "mentors", mentorId: mentors.mentorId };
   if (p === "/") return { kind: "app" };
   return { kind: "404" };
 }
+
 
 const hasClaudeStore = () => typeof window !== "undefined" && window.storage && typeof window.storage.get === "function";
 
@@ -4231,6 +4253,7 @@ const TABS = [
   { id: "exchange", label: "Opportunity Exchange", icon: Compass, public: true },
   { id: "track", label: "Track my answer", icon: Ticket, public: true },
   { id: "board", label: "Open theme stage", icon: BookOpen, public: true },
+  { id: "staff", label: "Staff Portal", icon: ShieldCheck, public: false },
   { id: "curate", label: "Curation desk", icon: Layers, public: false },
   { id: "insights", label: "Insights", icon: Map, public: false },
   { id: "pack", label: "Mentor pack", icon: FileSpreadsheet, public: false },
@@ -4506,13 +4529,17 @@ export default function App() {
       track: ["Track my answer · AYURDISHA", "Track your Ask Desk ticket and see when a mentor answers."],
       board: ["Open theme stage · AYURDISHA", "Published mentor answers from the AYURDISHA Meet the Mentors hall."],
       podcast: ["Podcast · AYURDISHA · WAC 2026", "Watch recorded mentor conversations from the AYURDISHA hall at the 11th World Ayurveda Congress."],
+      staff: ["Staff Portal · AYURDISHA", "Official staff curation & management portal."],
+      curate: ["Curation Desk · AYURDISHA Staff", "Review and group submitted delegate questions."],
+      insights: ["Insights · AYURDISHA Staff", "View delegate question trends and briefing summaries."],
+      pack: ["Mentor Pack · AYURDISHA Staff", "Mentor briefing packs and export tools."],
     };
     const pair = titles[tab] || titles.intro;
-    const staffish = tab === "curate" || tab === "insights" || tab === "pack";
+    const staffish = tab === "staff" || tab === "curate" || tab === "insights" || tab === "pack";
     setPageMeta({
       title: pair[0],
       description: pair[1],
-      path: tab === "intro" ? "/" : `/#${tab}`,
+      path: tab === "intro" ? "/" : (tab === "staff" ? "/staff" : `/#${tab}`),
       robots: staffish ? "noindex, nofollow" : undefined,
       jsonLd: tab === "intro" ? faqJsonLd(LAND_FAQS) : null,
     });
@@ -4702,7 +4729,7 @@ export default function App() {
                     </div>
                   )}
 
-                  {loading && tab !== "ask" && tab !== "register" && tab !== "pods" && tab !== "mentors" && tab !== "exchange" && tab !== "podcast" && tab !== "hall" ? (
+                  {loading && tab !== "ask" && tab !== "register" && tab !== "pods" && tab !== "mentors" && tab !== "exchange" && tab !== "podcast" && tab !== "hall" && tab !== "staff" ? (
                     <PageSkeleton label="Loading the question bank" />
                   ) : (
                     <>
@@ -4729,27 +4756,80 @@ export default function App() {
                       )}
                       {tab === "track" && <LookupView loading={loading} />}
                       {tab === "board" && <BoardView clusters={clusters} />}
-                      {staff && (tab === "curate" || tab === "insights" || tab === "pack") && (
-                        <div className="aym-staff-grid">
-                          <div style={{ minWidth: 0 }}>
-                            {tab === "curate" && (
-                              <CurationView subs={subs} clusters={clusters} setClusters={setClusters}
-                                reload={() => reload(true)} loading={loading} saveClusters={saveClusters}
-                                flushClusterSave={flushClusterSave} clustersVersion={clustersVersion}
-                                clusterSaveStatus={clusterSaveStatus}
-                                onClustersVersion={applyClustersVersion} onClusterConflict={reportClusterConflict} />
-                            )}
-                            {tab === "insights" && (
-                              <InsightsView subs={subs} clusters={clusters}
-                                onSaveQuestion={rec => setSubs(prev => prev.map(s => s.id === rec.id ? rec : s))} />
-                            )}
-                            {tab === "pack" && (
-                              <MentorPackView subs={subs} clusters={clusters} setClusters={setClusters} saveClusters={saveClusters}
-                                onSaveQuestion={rec => setSubs(prev => prev.map(s => s.id === rec.id ? rec : s))} />
-                            )}
+
+                      {tab === "staff" && (
+                        staff ? (
+                          <StaffWorkspace
+                            onGoTab={goTab}
+                            onLogout={lockAndPublic}
+                            questionsCount={subs.length}
+                            clustersCount={clusters.length}
+                          />
+                        ) : (
+                          <div className="aym-empty-state" style={{ margin: "3rem auto", maxWidth: 540 }}>
+                            <div className="aym-empty-icon"><Lock size={32} /></div>
+                            <h2 className="aym-empty-title">Staff Authentication Required</h2>
+                            <p className="aym-empty-message">Please enter the authority staff code to access the staff portal and curation tools.</p>
+                            <button type="button" className="aym-btn aym-btn-primary" onClick={() => setPinPrompt(true)}>
+                              Enter Staff Code
+                            </button>
                           </div>
-                          <DelegatesPanel users={delegates} loading={loading} onRefresh={() => reload(true)} />
-                        </div>
+                        )
+                      )}
+
+                      {(tab === "curate" || tab === "insights" || tab === "pack") && (
+                        staff ? (
+                          <div className="aym-staff-wrapper">
+                            <div className="aym-staff-subnav" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "12px 18px", background: "var(--white)", border: "1px solid var(--line)", borderRadius: "var(--radius-md)", marginBottom: 24, flexWrap: "wrap" }}>
+                              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                                <button type="button" className="aym-btn aym-btn-ghost aym-btn-sm" onClick={() => goTab("staff")}>
+                                  <ArrowLeft size={14} aria-hidden="true" />
+                                  <span>Staff Workspace</span>
+                                </button>
+                                <span style={{ color: "var(--muted)" }}>/</span>
+                                <span style={{ fontWeight: 600, color: "var(--forest)", fontSize: 14 }}>
+                                  {tab === "curate" ? "Curation Desk" : tab === "insights" ? "Insights" : "Mentor Pack"}
+                                </span>
+                              </div>
+                              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                                <button type="button" className={`aym-btn aym-btn-sm ${tab === "curate" ? "aym-btn-primary" : "aym-btn-ghost"}`} onClick={() => goTab("curate")}>Curation Desk</button>
+                                <button type="button" className={`aym-btn aym-btn-sm ${tab === "board" ? "aym-btn-primary" : "aym-btn-ghost"}`} onClick={() => goTab("board")}>Theme Stage</button>
+                                <button type="button" className={`aym-btn aym-btn-sm ${tab === "insights" ? "aym-btn-primary" : "aym-btn-ghost"}`} onClick={() => goTab("insights")}>Insights</button>
+                                <button type="button" className={`aym-btn aym-btn-sm ${tab === "pack" ? "aym-btn-primary" : "aym-btn-ghost"}`} onClick={() => goTab("pack")}>Mentor Pack</button>
+                              </div>
+                            </div>
+
+                            <div className="aym-staff-grid">
+                              <div style={{ minWidth: 0 }}>
+                                {tab === "curate" && (
+                                  <CurationView subs={subs} clusters={clusters} setClusters={setClusters}
+                                    reload={() => reload(true)} loading={loading} saveClusters={saveClusters}
+                                    flushClusterSave={flushClusterSave} clustersVersion={clustersVersion}
+                                    clusterSaveStatus={clusterSaveStatus}
+                                    onClustersVersion={applyClustersVersion} onClusterConflict={reportClusterConflict} />
+                                )}
+                                {tab === "insights" && (
+                                  <InsightsView subs={subs} clusters={clusters}
+                                    onSaveQuestion={rec => setSubs(prev => prev.map(s => s.id === rec.id ? rec : s))} />
+                                )}
+                                {tab === "pack" && (
+                                  <MentorPackView subs={subs} clusters={clusters} setClusters={setClusters} saveClusters={saveClusters}
+                                    onSaveQuestion={rec => setSubs(prev => prev.map(s => s.id === rec.id ? rec : s))} />
+                                )}
+                              </div>
+                              <DelegatesPanel users={delegates} loading={loading} onRefresh={() => reload(true)} />
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="aym-empty-state" style={{ margin: "3rem auto", maxWidth: 540 }}>
+                            <div className="aym-empty-icon"><Lock size={32} /></div>
+                            <h2 className="aym-empty-title">Staff Authentication Required</h2>
+                            <p className="aym-empty-message">Please enter the authority staff code to access this curation view.</p>
+                            <button type="button" className="aym-btn aym-btn-primary" onClick={() => setPinPrompt(true)}>
+                              Enter Staff Code
+                            </button>
+                          </div>
+                        )
                       )}
                     </>
                   )}
@@ -4782,10 +4862,18 @@ export default function App() {
             <Route path="/resources" element={<ResourcesPage />} />
             <Route path="/resources/:slug" element={<ResourceDetailPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/track-answer" element={null} />
+            <Route path="/staff" element={null} />
+            <Route path="/staff/login" element={null} />
+            <Route path="/staff/curation" element={null} />
+            <Route path="/staff/theme-stage" element={null} />
+            <Route path="/staff/insights" element={null} />
+            <Route path="/staff/mentor-pack" element={null} />
             <Route path="/privacy" element={<PrivacyRoute />} />
             <Route path="/terms" element={<TermsRoute />} />
             <Route path="/disclaimer" element={<DisclaimerRoute />} />
             <Route path="*" element={<NotFoundPage />} />
+
           </Routes>
         </Suspense>
 
