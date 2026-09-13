@@ -1,5 +1,5 @@
 import React from "react";
-import { Layers, BookOpen, Map, FileSpreadsheet, LogOut, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { Layers, BookOpen, Map, FileSpreadsheet, LogOut, ShieldCheck, CheckCircle2, ArrowRight } from "lucide-react";
 import ActionCard from "./ActionCard.jsx";
 
 export default function StaffWorkspace({ onGoTab, onLogout, questionsCount = 0, clustersCount = 0 }) {
@@ -7,7 +7,9 @@ export default function StaffWorkspace({ onGoTab, onLogout, questionsCount = 0, 
     {
       id: "curate",
       title: "Curation Desk",
-      description: "Review, merge, and organize submitted student & delegate questions into thematic groups for mentor response.",
+      what: "Primary Question Curation Tool",
+      why: "Review, cluster, and group raw student questions into coherent themes before mentor briefing.",
+      whatHappens: "Opens the curation desk where you can merge similar asks, edit cluster wording, and assign questions to mentor tracks.",
       icon: Layers,
       buttonText: "Open Curation Desk",
       badgeText: "Core Workspace",
@@ -15,15 +17,19 @@ export default function StaffWorkspace({ onGoTab, onLogout, questionsCount = 0, 
     {
       id: "board",
       title: "Open Theme Stage",
-      description: "Access published stage questions and two-chair mentor answer letters left for the Ayurveda community.",
+      what: "Live & Published Mentor Stage Answers",
+      why: "Review published mentor responses and two-chair stage conversation records.",
+      whatHappens: "Displays the public stage view with published answer letters and congress proceedings.",
       icon: BookOpen,
       buttonText: "Open Theme Stage",
       badgeText: "Stage & Answers",
     },
     {
       id: "insights",
-      title: "Insights",
-      description: "View thematic distribution summaries, briefing boards, and delegate query analytics across career tracks.",
+      title: "Insights & Briefings",
+      what: "Analytics & Mentor Briefing Board",
+      why: "Track delegate question statistics, top career interest areas, and personal reply statuses.",
+      whatHappens: "Opens thematic breakdown cards, delegate frequency distribution, and briefing notes.",
       icon: Map,
       buttonText: "Open Insights",
       badgeText: "Analytics & Briefings",
@@ -31,7 +37,9 @@ export default function StaffWorkspace({ onGoTab, onLogout, questionsCount = 0, 
     {
       id: "pack",
       title: "Mentor Pack",
-      description: "Access mentor-related briefing documents, customized question exports, and mentor guidance materials.",
+      what: "Mentor Guidance & Export Portal",
+      why: "Generate tailored briefing packets and Excel exports for visiting Congress mentors.",
+      whatHappens: "Opens mentor resource materials, question bank export tools, and individual mentor briefing sheets.",
       icon: FileSpreadsheet,
       buttonText: "Open Mentor Pack",
       badgeText: "Mentor Resources",
@@ -80,15 +88,33 @@ export default function StaffWorkspace({ onGoTab, onLogout, questionsCount = 0, 
 
       <div className="aym-staff-actions-grid">
         {actions.map((act) => (
-          <ActionCard
-            key={act.id}
-            title={act.title}
-            description={act.description}
-            icon={act.icon}
-            buttonText={act.buttonText}
-            badgeText={act.badgeText}
-            onClick={() => onGoTab(act.id)}
-          />
+          <div key={act.id} className="aym-card aym-action-card">
+            <div className="aym-action-card-head">
+              <div className="aym-action-card-icon-box">
+                <act.icon size={22} className="aym-action-card-icon" aria-hidden="true" />
+              </div>
+              <span className="aym-badge aym-badge-gold">{act.badgeText}</span>
+            </div>
+
+            <h3 className="aym-action-card-title">{act.title}</h3>
+            
+            <div className="aym-staff-card-details">
+              <p className="aym-staff-detail-what"><strong>What it is:</strong> {act.what}</p>
+              <p className="aym-staff-detail-why"><strong>Why use it:</strong> {act.why}</p>
+              <p className="aym-staff-detail-happens"><strong>When opened:</strong> {act.whatHappens}</p>
+            </div>
+
+            <div className="aym-action-card-foot">
+              <button
+                type="button"
+                className="aym-btn aym-btn-primary aym-action-card-btn"
+                onClick={() => onGoTab(act.id)}
+              >
+                <span>{act.buttonText}</span>
+                <ArrowRight size={16} aria-hidden="true" />
+              </button>
+            </div>
+          </div>
         ))}
       </div>
     </div>

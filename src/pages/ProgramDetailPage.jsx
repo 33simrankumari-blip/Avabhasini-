@@ -31,9 +31,11 @@ export default function ProgramDetailPage() {
     <div className="aym-page aym-py-12">
       <div className="aym-container aym-max-w-4xl">
         <Breadcrumbs 
+          backTo="/programs"
+          backLabel="Back to Programs"
           items={[
-            { name: "Programs & Tracks", path: "/programs" },
-            { name: `Track ${program.code}` }
+            { label: "Programs & Tracks", to: "/programs" },
+            { label: `Track ${program.code}` }
           ]} 
         />
 

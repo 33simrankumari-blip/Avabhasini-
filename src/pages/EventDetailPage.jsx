@@ -34,9 +34,11 @@ export default function EventDetailPage() {
     <div className="aym-page aym-py-12">
       <div className="aym-container aym-max-w-4xl">
         <Breadcrumbs 
+          backTo="/events"
+          backLabel="Back to Events"
           items={[
-            { name: "Events", path: "/events" },
-            { name: event.date }
+            { label: "Congress Sessions", to: "/events" },
+            { label: event.date }
           ]} 
         />
 

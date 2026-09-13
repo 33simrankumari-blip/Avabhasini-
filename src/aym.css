@@ -5097,6 +5097,312 @@ body { margin: 0; background: var(--cream); }
   text-align: left;
 }
 
+/* Split Hero Visual Layout */
+.aym-hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 2.5rem;
+  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+@media (max-width: 992px) {
+  .aym-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+.aym-hero-media {
+  width: 100%;
+}
+.aym-hero-image-frame {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 32px rgba(30, 58, 43, 0.12);
+  background: var(--white);
+}
+.aym-hero-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+.aym-hero-image-overlay {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: flex-start;
+}
+.aym-hero-overlay-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(30, 58, 43, 0.88);
+  backdrop-filter: blur(8px);
+  color: #FFFEFB;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(194, 139, 56, 0.4);
+}
+
+/* 3-Step Sequence ("How AYURDISHA Works") */
+.aym-steps-grid {
+  gap: 1.5rem;
+}
+.aym-step-card {
+  position: relative;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+.aym-step-num {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: rgba(194, 139, 56, 0.25);
+  font-family: var(--font-display);
+}
+.aym-step-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: #FAF6ED;
+  color: var(--forest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  border: 1px solid rgba(194, 139, 56, 0.3);
+}
+.aym-step-card h3 {
+  font-size: 1.15rem;
+  color: var(--forest);
+  margin-bottom: 0.5rem;
+}
+.aym-step-card p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+}
+.aym-step-tag {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* 10 Visual Career Tracks Grid */
+.aym-visual-tracks-grid {
+  gap: 1.5rem;
+}
+.aym-track-visual-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.aym-track-visual-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(30, 58, 43, 0.08);
+}
+.aym-track-card-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 190px;
+  overflow: hidden;
+  background: var(--sand);
+}
+.aym-track-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.aym-track-visual-card:hover .aym-track-card-img {
+  transform: scale(1.03);
+}
+.aym-track-card-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+.aym-track-card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.aym-track-card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background: #FAF6ED;
+  color: var(--forest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+  border: 1px solid rgba(194, 139, 56, 0.25);
+}
+.aym-track-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--forest);
+  margin-bottom: 0.5rem;
+}
+.aym-track-card-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+}
+.aym-track-card-cta {
+  align-self: flex-start;
+  font-weight: 600;
+  color: var(--forest);
+  padding-left: 0;
+}
+
+/* Congress Hall Section */
+.aym-hall-preview-grid {
+  gap: 2.5rem;
+  align-items: center;
+}
+.aym-hall-preview-media {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+.aym-hall-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.aym-hall-lead {
+  font-size: 1.05rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+.aym-hall-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+}
+.aym-hall-feat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--forest);
+}
+.aym-hall-cta-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Breadcrumbs Component */
+.aym-breadcrumbs-wrapper {
+  margin-bottom: 1.5rem;
+}
+.aym-breadcrumbs-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 8px 12px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+.aym-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--forest);
+}
+.aym-breadcrumbs-nav {
+  display: flex;
+  align-items: center;
+}
+.aym-breadcrumbs-list {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+}
+.aym-breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.aym-breadcrumb-link {
+  color: var(--muted);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.aym-breadcrumb-link:hover {
+  color: var(--forest);
+}
+.aym-breadcrumb-sep {
+  color: var(--muted);
+  opacity: 0.6;
+}
+.aym-breadcrumb-current {
+  color: var(--forest);
+  font-weight: 600;
+}
+
+/* Staff Card Detail Text */
+.aym-staff-card-details {
+  margin-bottom: 1.25rem;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #FAF6ED;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(194, 139, 56, 0.2);
+}
+.aym-staff-card-details strong {
+  color: var(--forest);
+}
+
+
 
 
 

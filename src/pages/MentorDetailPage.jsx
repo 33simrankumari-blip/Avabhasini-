@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getMentorByParam, mentorPublicPath } from "../mentors.js";
 import { setPageMeta, personJsonLd } from "../siteMeta.js";
 import PageSkeleton from "../components/SkeletonLoaders.jsx";
+import Breadcrumbs from "../components/Breadcrumbs.jsx";
 
 const MentorProfile = lazy(() => import("../MentorProfile.jsx"));
 
@@ -34,6 +35,14 @@ export default function MentorDetailPage() {
   return (
     <div className="aym-page aym-py-8">
       <div className="aym-container">
+        <Breadcrumbs 
+          backTo="/mentors" 
+          backLabel="Back to Mentors" 
+          items={[
+            { label: "Mentors", to: "/mentors" },
+            { label: mentor ? mentor.name : "Mentor Profile" }
+          ]} 
+        />
         <Suspense fallback={<PageSkeleton />}>
           <MentorProfile mentorId={slug} />
         </Suspense>

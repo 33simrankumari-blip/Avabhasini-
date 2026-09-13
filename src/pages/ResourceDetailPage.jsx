@@ -35,9 +35,11 @@ export default function ResourceDetailPage() {
     <div className="aym-page aym-py-12">
       <div className="aym-container aym-max-w-4xl">
         <Breadcrumbs 
+          backTo="/resources"
+          backLabel="Back to Resources"
           items={[
-            { name: "Resources", path: "/resources" },
-            { name: resource.category }
+            { label: "Resources", to: "/resources" },
+            { label: resource.category }
           ]} 
         />
 

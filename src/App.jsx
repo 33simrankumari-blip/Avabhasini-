@@ -4755,7 +4755,29 @@ export default function App() {
                         </Suspense>
                       )}
                       {tab === "track" && <LookupView loading={loading} />}
-                      {tab === "board" && <BoardView clusters={clusters} />}
+                      {tab === "board" && (
+                        <>
+                          {staff && (
+                            <div className="aym-staff-subnav" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "12px 18px", background: "var(--white)", border: "1px solid var(--line)", borderRadius: "var(--radius-md)", marginBottom: 24, flexWrap: "wrap" }}>
+                              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                                <button type="button" className="aym-btn aym-btn-ghost aym-btn-sm" onClick={() => goTab("staff")}>
+                                  <ArrowLeft size={14} aria-hidden="true" />
+                                  <span>Back to Staff Portal</span>
+                                </button>
+                                <span style={{ color: "var(--muted)" }}>/</span>
+                                <span style={{ fontWeight: 600, color: "var(--forest)", fontSize: 14 }}>Open Theme Stage</span>
+                              </div>
+                              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                                <button type="button" className="aym-btn aym-btn-sm aym-btn-ghost" onClick={() => goTab("curate")}>Curation Desk</button>
+                                <button type="button" className="aym-btn aym-btn-sm aym-btn-primary" onClick={() => goTab("board")}>Theme Stage</button>
+                                <button type="button" className="aym-btn aym-btn-sm aym-btn-ghost" onClick={() => goTab("insights")}>Insights</button>
+                                <button type="button" className="aym-btn aym-btn-sm aym-btn-ghost" onClick={() => goTab("pack")}>Mentor Pack</button>
+                              </div>
+                            </div>
+                          )}
+                          <BoardView clusters={clusters} />
+                        </>
+                      )}
 
                       {tab === "staff" && (
                         staff ? (
