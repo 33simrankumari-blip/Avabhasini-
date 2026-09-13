@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback, lazy, Suspense, useId } from "react";
-import { useLocation, useNavigate, Routes, Route } from "react-router-dom";
+import { useLocation, useNavigate, Routes, Route, Navigate } from "react-router-dom";
 import {
   Send, Search, Layers, FileSpreadsheet, BookOpen, Download, Upload,
   Check, X, ChevronRight, ChevronLeft, Loader2, RefreshCw, Lock, Unlock, Trash2,
@@ -13,13 +13,12 @@ import { getPodByCode, KNOWLEDGE_TABS, getSectionForTab, POD_KNOWLEDGE } from ".
 import { setPageMeta, personJsonLd, breadcrumbJsonLd, faqJsonLd } from "./siteMeta.js";
 import { getMentorByParam, mentorPublicPath, mentorsWithNames, MENTORS } from "./mentors.js";
 import { MentorAnswerLetter, trackStatusOf } from "./TrackAnswer.jsx";
-import AppHeader, { LandingHeader, SimpleHeader } from "./AppHeader.jsx";
+import AppHeader from "./AppHeader.jsx";
 import SiteFooter from "./SiteFooter.jsx";
 import PageSkeleton from "./PageSkeleton.jsx";
 import { AboutPage, PrivacyPage, TermsPage, DisclaimerPage } from "./LegalPages.jsx";
 import NotFound from "./NotFound.jsx";
 
-import HomePage from "./pages/HomePage.jsx";
 import AboutPageNew from "./pages/AboutPage.jsx";
 import MentorsPage from "./pages/MentorsPage.jsx";
 import MentorDetailPage from "./pages/MentorDetailPage.jsx";
@@ -1075,47 +1074,29 @@ function IntroLeaves() {
 
 const LAND_BENEFITS = [
   {
-    Icon: HelpCircle,
-    kicker: "What this is",
-    title: "A hall on your phone",
-    body: "AYURDISHA is the digital Meet the Mentors hall of the 11th World Ayurveda Congress. You do not need to already know the Congress floor. Register, ask one career question, and a mentor answers you — here, on your phone or laptop, before or after Bhubaneswar.",
-  },
-  {
     Icon: MessageCircle,
-    kicker: "The answer",
-    title: "Guidance from a mentor",
-    body: "This is not a chatbot and not a brochure. A mentor reads what you asked — PG, clinic, research, public health, start-ups, or practice abroad — and writes guidance you can act on. Nothing here is a job offer, a Congress seat, or medical advice.",
+    kicker: "Guidance",
+    title: "A mentor answers in writing",
+    body: "This is not a chatbot. A mentor reads your career question — PG, clinic, research, public health, start-ups, or practice abroad — and writes guidance you can act on.",
   },
   {
     Icon: BadgeCheck,
-    kicker: "Your seat",
-    title: "One number that follows you",
-    body: "When you register, the hall issues your WAC registration number. That number identifies you on Ask Desk, Track my answer, and every later visit. Keep it — it is how the hall finds you again.",
-  },
-  {
-    Icon: HeartHandshake,
-    kicker: "How it helps",
-    title: "Many mentees, still personal",
-    body: "If several of you ask the same thing, mentors may answer together so the hall can reach more BAMS students. Distinct questions still get a personal reply. You choose, when you ask, whether similar questions may be merged.",
+    kicker: "Identity",
+    title: "One issued WAC number",
+    body: "After email verification the hall issues 11WAC/2026/NNNN. Ask Desk and Track use that number. You do not type it yourself.",
   },
   {
     Icon: Calendar,
-    kicker: "Bhubaneswar",
-    title: "In person if you are shortlisted",
-    body: "Some mentees are invited by the guider for a Meet the Mentors visit at the Congress. If you are chosen, you pick the visit date yourself. Registration here does not guarantee a place in that room.",
-  },
-  {
-    Icon: Compass,
-    kicker: "If you cannot travel",
-    title: "The hall stays open online",
-    body: "Not invited this time? You are not left out. Mentors keep answering in this app — the same Track page, the same WAC registration number, the same hall on your phone.",
+    kicker: "Congress",
+    title: "Online for all, floor for some",
+    body: "Everyone keeps this hall on their phone. A shortlist for an in-person Meet the Mentors visit in Bhubaneswar is separate — registration here is not a floor ticket.",
   },
 ];
 
 const ROAD_STEPS = [
   { n: "01", title: "Register", body: "Tell us your name, age, sex, institute, and email. We send a 6-digit code to that inbox so only a real person gets a seat in the hall. Registration is free — your WAC registration number is issued the moment you verify.", Icon: UserPlus },
-  { n: "02", title: "Ask Desk · WAC number", body: "Your issued WAC registration number is already on your profile. Ask Desk shows it read-only with your question. That number is how AYURDISHA recognises you.", Icon: BadgeCheck },
-  { n: "03", title: "Ask a mentor", body: "One focused career question at the Ask Desk: what to do after BAMS, which PG branch, how to start a clinic, research, AYUSH service, start-ups, or practice abroad. You choose whether similar questions may be merged so the hall can help more mentees.", Icon: Send },
+  { n: "02", title: "Ask Desk", body: "Your issued WAC number sits on your profile and on Ask Desk as read-only. File one focused career question.", Icon: BadgeCheck },
+  { n: "03", title: "Ask a mentor", body: "PG, clinic, research, AYUSH service, start-ups, or practice abroad. Similar questions may be merged if you allow it.", Icon: Send },
   { n: "04", title: "A mentor answers", body: "Guidance lands on Track my answer against your ticket. If you allowed merging, you may see both the hall answer (what many asked together) and a personal note.", Icon: MessageCircle },
 ];
 const ROAD_FORK = [
@@ -1188,8 +1169,6 @@ function LandingPage({ onGetStarted, onRegister, onStaff }) {
 
   return (
     <div className="aym-land">
-      <LandingHeader onRegister={onRegister} />
-
       <section className="aym-land-hero" ref={heroRef} aria-labelledby="land-h1">
         <div className="aym-land-bleed" aria-hidden="true">
           <div className="aym-land-bleed-shift" style={hallShift}>
@@ -1249,12 +1228,10 @@ function LandingPage({ onGetStarted, onRegister, onStaff }) {
             </div>
             <div className="aym-land-section-head">
               <div className="aym-eyebrow">How it works</div>
-              <h2 className="aym-display">Register, receive your WAC number, and a mentor answers</h2>
+              <h2 className="aym-display">Four steps in this hall</h2>
               <p>
-                If you have never opened this hall before, this is the path. You register with a real email
-                (name, institute, OTP). The hall issues your WAC registration number at once. Then you ask one focused
-                question at the Ask Desk. A mentor answers on Track my answer. Some mentees are shortlisted for an in-person
-                Meet the Mentors visit in Bhubaneswar. Everyone else keeps learning here, online.
+                Register with a real email. The hall issues your WAC number. Ask one career question.
+                A mentor answers on Track my answer.
               </p>
             </div>
           </div>
@@ -1278,17 +1255,13 @@ function LandingPage({ onGetStarted, onRegister, onStaff }) {
 
         <section className="aym-land-section aym-land-section-alt" id="what-benefits">
           <div className="aym-land-section-head">
-            <div className="aym-eyebrow">Benefits</div>
-            <h2 className="aym-display">What you receive in this hall</h2>
-            <p>
-              AYURDISHA is the Meet the Mentors hall on your phone: mentors, your WAC registration number on Ask Desk, and a path
-              that continues whether or not you reach Odisha.
-            </p>
+            <div className="aym-eyebrow">What this hall offers</div>
+            <h2 className="aym-display">Written guidance. An issued number. A Congress path.</h2>
           </div>
           <div className="aym-land-benefits" aria-label="What AYURDISHA offers">
             {LAND_BENEFITS.map((card, i) => {
               const Icon = card.Icon;
-              const shot = i % 3 === 0 ? "hall" : i % 3 === 1 ? "pods" : "stage";
+              const shot = i === 0 ? "hall" : i === 1 ? "pods" : "stage";
               return (
                 <article key={card.title} className="aym-land-benefit" style={{ animationDelay: `${0.04 + i * 0.06}s` }}>
                   <div className={`aym-land-benefit-media aym-land-benefit-${shot}`} aria-hidden="true" />
@@ -1305,38 +1278,29 @@ function LandingPage({ onGetStarted, onRegister, onStaff }) {
         <section className="aym-land-section" id="who-its-for">
           <div className="aym-land-who-banner" role="img" aria-label="Meet the Mentors hall at WAC Bhubaneswar" />
           <div className="aym-land-section-head">
-            <div className="aym-eyebrow">Who it’s for</div>
-            <h2 className="aym-display">Everyone walking into Meet the Mentors</h2>
-            <p>
-              If you are coming to the hall — student, intern, graduate, or practitioner — start with
-              Register. You do not need a Congress pass to enter AYURDISHA online. Staff and mentors use the
-              same hall to merge similar questions, write answers, and shortlist in-person visits in Bhubaneswar.
-              Track your ticket anytime with your ask ticket ID or email.
-            </p>
+            <div className="aym-eyebrow">Who it is for</div>
+            <h2 className="aym-display">Delegates, mentees, and the Congress desk</h2>
           </div>
           <div className="aym-land-who">
             <article className="aym-land-who-card">
               <div className="aym-land-who-shot aym-land-who-shot-pods" aria-hidden="true" />
               <GraduationCap size={22} />
-              <h3>Delegates and mentees</h3>
-              <p>Register first. The hall issues your WAC registration number, then you sit with a mentor at the Ask Desk — on your phone, then on the floor.</p>
+              <h3>BAMS mentees</h3>
+              <p>Students, interns, graduates, and practitioners. No Congress pass is required to use AYURDISHA online.</p>
             </article>
             <article className="aym-land-who-card">
               <div className="aym-land-who-shot aym-land-who-shot-stage" aria-hidden="true" />
               <Users size={22} />
               <h3>Mentors and staff</h3>
-              <p>The same hall holds the curation desk, insights, and mentor pack — entered with the authority staff code.</p>
+              <p>Curation, insights, and the mentor pack sit behind the staff PIN on the same hall.</p>
             </article>
           </div>
-          <p className="aym-land-cta-hint">
-            New to AYURDISHA? Register first, then enter the hall.
-          </p>
           <div className="aym-land-end">
-            <button type="button" className="aym-land-cta aym-land-cta-forest" onClick={onGetStarted}>
-              Enter the hall <ArrowRight size={18} aria-hidden="true" />
+            <button type="button" className="aym-land-cta aym-land-cta-forest" onClick={onRegister}>
+              Register <ArrowRight size={18} aria-hidden="true" />
             </button>
-            <button type="button" className="aym-btn aym-btn-gold" onClick={onRegister}>
-              <UserPlus size={16} aria-hidden="true" /> Register
+            <button type="button" className="aym-btn aym-btn-gold" onClick={onGetStarted}>
+              Enter the hall
             </button>
           </div>
         </section>
@@ -1356,8 +1320,6 @@ function LandingPage({ onGetStarted, onRegister, onStaff }) {
           </div>
         </section>
       </div>
-
-      <SiteFooter variant="land" onStaff={onStaff} />
     </div>
   );
 }
@@ -4703,8 +4665,8 @@ export default function App() {
         <Suspense fallback={<PageSkeleton label="Loading content..." />}>
           <Routes>
             <Route path="/" element={
-              (tab === "intro" || tab === "hall") && (!location.hash || location.hash === "#intro") ? (
-                <HomePage />
+              tab === "intro" && (!location.hash || location.hash === "#intro") ? (
+                <LandingPage onGetStarted={() => goTab("hall")} onRegister={() => goTab("register")} />
               ) : fullBleed ? (
                 <HallView
                   staff={staff}
@@ -4874,6 +4836,7 @@ export default function App() {
               )
             } />
 
+            <Route path="/ask" element={<Navigate to="/#ask" replace />} />
             <Route path="/about" element={<AboutPageNew />} />
             <Route path="/mentors" element={<MentorsPage />} />
             <Route path="/mentors/:slug" element={<MentorDetailPage />} />

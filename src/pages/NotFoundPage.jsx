@@ -27,8 +27,8 @@ export default function NotFoundPage({ message = "The page you are looking for m
           <Link to="/mentors" className="aym-btn aym-btn-secondary">
             <Users size={16} aria-hidden="true" /> Explore Mentors
           </Link>
-          <Link to="/programs" className="aym-btn aym-btn-outline">
-            <BookOpen size={16} aria-hidden="true" /> Browse 10 Tracks
+          <Link to="/#pods" className="aym-btn aym-btn-outline">
+            <BookOpen size={16} aria-hidden="true" /> Knowledge
           </Link>
         </div>
       </div>

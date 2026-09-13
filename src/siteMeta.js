@@ -3,6 +3,10 @@
 export const SITE_ORIGIN = "https://ayushmarg.vercel.app";
 export const SITE_NAME = "AYURDISHA";
 
+export function getPageTitle(title) {
+  return `${title} · ${SITE_NAME}`;
+}
+
 export function orgJsonLd() {
   return {
     "@context": "https://schema.org",

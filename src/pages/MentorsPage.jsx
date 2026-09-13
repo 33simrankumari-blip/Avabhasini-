@@ -8,8 +8,8 @@ const MentorsDirectory = lazy(() => import("../MentorsDirectory.jsx"));
 export default function MentorsPage() {
   useEffect(() => {
     setPageMeta({
-      title: "Ayurveda Mentors & Experts Roster · AYURDISHA · WAC 2026",
-      description: "Meet the 23 tentative mentors for the 11th World Ayurveda Congress, Bhubaneswar 2026. Vice Chancellors, directors, CCRAS researchers, and clinical specialists.",
+      title: "Meet the Mentors · AYURDISHA · WAC 2026",
+      description: "Tentative mentor roster for AYURDISHA at the 11th World Ayurveda Congress, Bhubaneswar 2026.",
       path: "/mentors",
     });
   }, []);
@@ -17,7 +17,7 @@ export default function MentorsPage() {
   return (
     <div className="aym-page aym-py-8">
       <div className="aym-container">
-        <Breadcrumbs items={[{ name: "Mentors Directory" }]} />
+        <Breadcrumbs items={[{ label: "Mentors" }]} />
         <Suspense fallback={<PageSkeleton />}>
           <MentorsDirectory />
         </Suspense>

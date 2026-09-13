@@ -47,13 +47,13 @@ export default function Breadcrumbs({
                 return (
                   <li key={idx} className="aym-breadcrumb-item">
                     <ChevronRight size={13} className="aym-breadcrumb-sep" aria-hidden="true" />
-                    {isLast || !item.to ? (
+                    {isLast || !(item.to || item.path) ? (
                       <span className="aym-breadcrumb-current" aria-current="page">
-                        {item.label}
+                        {item.label || item.name}
                       </span>
                     ) : (
-                      <Link to={item.to} className="aym-breadcrumb-link">
-                        {item.label}
+                      <Link to={item.to || item.path} className="aym-breadcrumb-link">
+                        {item.label || item.name}
                       </Link>
                     )}
                   </li>

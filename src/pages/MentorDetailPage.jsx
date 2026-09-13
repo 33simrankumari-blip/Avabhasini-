@@ -8,43 +8,42 @@ import Breadcrumbs from "../components/Breadcrumbs.jsx";
 const MentorProfile = lazy(() => import("../MentorProfile.jsx"));
 
 export default function MentorDetailPage() {
-  const { slug } = useParams();
-  const mentor = getMentorByParam(slug);
+  const { slug, id } = useParams();
+  const param = slug || id;
+  const mentor = getMentorByParam(param);
 
   useEffect(() => {
     if (mentor) {
       const path = mentorPublicPath(mentor);
-      const title = `${mentor.name} — Ayurveda Mentor Profile · AYURDISHA`;
-      const description = `${mentor.name}${mentor.designation ? ` (${mentor.designation})` : ""} — tentative mentor for the 11th World Ayurveda Congress 2026.`;
-      
       setPageMeta({
-        title,
-        description,
+        title: `${mentor.name} — Mentor · AYURDISHA`,
+        description: `${mentor.name}${mentor.designation ? ` (${mentor.designation})` : ""} — tentative mentor for the 11th World Ayurveda Congress 2026.`,
         path,
         personLd: personJsonLd(mentor, path),
       });
     } else {
       setPageMeta({
-        title: "Mentor Not Found · AYURDISHA",
-        description: "The requested mentor profile is not listed in the current WAC roster.",
-        path: `/mentors/${slug || ""}`,
+        title: "Mentor not found · AYURDISHA",
+        description: "The requested mentor is not on the current WAC roster.",
+        path: `/mentors/${param || ""}`,
+        robots: "noindex",
       });
     }
-  }, [mentor, slug]);
+  }, [mentor, param]);
 
   return (
     <div className="aym-page aym-py-8">
       <div className="aym-container">
-        <Breadcrumbs 
-          backTo="/mentors" 
-          backLabel="Back to Mentors" 
+        <Breadcrumbs
+          backTo="/mentors"
+          backLabel="Back to Mentors"
           items={[
             { label: "Mentors", to: "/mentors" },
-            { label: mentor ? mentor.name : "Mentor Profile" }
-          ]} 
+            { label: mentor ? mentor.name : "Mentor" },
+          ]}
         />
         <Suspense fallback={<PageSkeleton />}>
-          <MentorProfile mentorId={slug} />
+          <MentorProfile mentorId={param} />
         </Suspense>
       </div>
     </div>
