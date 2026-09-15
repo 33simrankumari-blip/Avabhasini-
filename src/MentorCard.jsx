@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Award, MapPin, Stethoscope } from "lucide-react";
 import {
   mentorInitials,
   mentorAffiliationSnippet,
@@ -16,47 +16,74 @@ export default function MentorCard({ mentor, index = 0 }) {
 
   return (
     <article
-      className="aym-mentor-card"
+      className="aym-mentor-card-premium"
       style={{ animationDelay: `${Math.min(index, 16) * 0.035}s` }}
     >
-      <div className="aym-mentor-card-top">
-        <div className="aym-mentor-avatar">
+      <div className="aym-mentor-card-top-premium">
+        <div className="aym-mentor-avatar-container">
           {portrait ? (
             <img 
               src={portrait} 
               alt={`Portrait of ${mentor.name}`} 
-              width={72} 
-              height={72} 
+              width={80} 
+              height={80} 
+              className="aym-mentor-avatar-img"
               loading="lazy" 
               decoding="async" 
             />
           ) : (
-            <span aria-hidden="true">{initials}</span>
+            <span className="aym-mentor-avatar-initials" aria-hidden="true">{initials}</span>
           )}
         </div>
+        
+        {mentor.expertise && (
+          <span className="aym-mentor-badge-specialty">
+            <Stethoscope size={12} aria-hidden="true" />
+            <span>{mentor.expertise.split(";")[0].split("(")[0].trim()}</span>
+          </span>
+        )}
       </div>
 
-      <div className="aym-mentor-body">
-        <h3 className="aym-mentor-name">
-          <Link to={mentorPublicPath(mentor)} className="aym-mentor-name-link">
+      <div className="aym-mentor-body-premium">
+        <h3 className="aym-mentor-name-premium">
+          <Link to={mentorPublicPath(mentor)} className="aym-mentor-name-link-premium">
             {mentor.name}
           </Link>
         </h3>
+        
         {designation ? (
-          <p className="aym-mentor-role">{designation}</p>
+          <p className="aym-mentor-role-premium">
+            <Award size={14} className="aym-icon-role" aria-hidden="true" />
+            <span>{designation}</span>
+          </p>
         ) : (
-          <p className="aym-mentor-role aym-mentor-role-soft">Details to follow</p>
+          <p className="aym-mentor-role-premium aym-mentor-role-soft">
+            <Award size={14} className="aym-icon-role" aria-hidden="true" />
+            <span>Academic Mentor</span>
+          </p>
         )}
-        {affiliation && <p className="aym-mentor-affiliation">{affiliation}</p>}
+        
+        {affiliation ? (
+          <p className="aym-mentor-affiliation-premium">
+            <MapPin size={14} className="aym-icon-pin" aria-hidden="true" />
+            <span>{affiliation}</span>
+          </p>
+        ) : (
+          <p className="aym-mentor-affiliation-premium aym-mentor-affiliation-soft">
+            <MapPin size={14} className="aym-icon-pin" aria-hidden="true" />
+            <span>Faculty Roster · WAC 2026</span>
+          </p>
+        )}
       </div>
 
-      <div className="aym-mentor-card-actions">
+      <div className="aym-mentor-card-actions-premium">
         <Link
           to={mentorPublicPath(mentor)}
-          className="aym-btn aym-mentor-card-cta"
+          className="aym-btn aym-mentor-card-cta-premium"
           aria-label={`View profile of ${mentor.name}`}
         >
-          View profile <ArrowRight size={15} aria-hidden="true" />
+          <span>View Profile</span> 
+          <ArrowRight size={15} aria-hidden="true" />
         </Link>
       </div>
     </article>

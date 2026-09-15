@@ -10,9 +10,6 @@ import { MENTORS, mentorsWithNames, mentorPublicPath, mentorInitials, mentorPort
 import { getAllPrograms } from "../data/programs.js";
 import { getAllEvents } from "../data/events.js";
 import { getAllResources } from "../data/resources.js";
-import ProgramCard from "../components/ProgramCard.jsx";
-import EventCard from "../components/EventCard.jsx";
-import ResourceCard from "../components/ResourceCard.jsx";
 import { setPageMeta, faqJsonLd } from "../siteMeta.js";
 
 export default function HomePage() {
@@ -45,52 +42,41 @@ export default function HomePage() {
   }, []);
 
   const featuredMentors = mentorsWithNames(MENTORS).slice(0, 6);
-  const featuredPrograms = getAllPrograms().slice(0, 6);
-  const upcomingEvents = getAllEvents().slice(0, 2);
-  const featuredResources = getAllResources().slice(0, 3);
 
-  const careerTrackVisuals = [
+  const pathways = [
     {
-      id: "clinical-practice",
-      title: "Clinical Practice & Integrative Care",
-      desc: "Hospital posts, private OPD setup, Nadi Pariksha, Panchakarma centers, and integrative care models.",
-      image: "/assets/ayurdisha-clinical.png",
-      icon: Stethoscope,
-      badge: "Clinical Track",
-      link: "/programs/clinical-practice",
+      title: "10 Career Tracks",
+      desc: "Comprehensive post-BAMS career roadmaps and educational directions.",
+      link: "/programs",
+      icon: Compass,
+      label: "Explore Tracks"
     },
     {
-      id: "research-evidence",
-      title: "Research, Evidence & Clinical Trials",
-      desc: "CCRAS research fellowships, PhD pathways, clinical trials, phytomedicine research, and publication guidance.",
-      image: "/assets/ayurdisha-research.png",
-      icon: Microscope,
-      badge: "Research Track",
-      link: "/programs/research-evidence",
+      title: "Faculty Roster",
+      desc: "Connect with 23+ distinguished clinicians and academic mentors.",
+      link: "/mentors",
+      icon: Users,
+      label: "Meet Mentors"
     },
     {
-      id: "academics-teaching",
-      title: "Academics, Teaching & PG Entrance",
-      desc: "AIAPGET preparation, MD/MS branch selection, Assistant Professor posts, and institutional teaching careers.",
-      image: "/assets/ayurdisha-hero.png",
-      icon: GraduationCap,
-      badge: "Academic Track",
-      link: "/programs/academics-teaching",
+      title: "Congress Events",
+      desc: "Key schedules, sessions, and theme-stage details in Bhubaneswar.",
+      link: "/events",
+      icon: Calendar,
+      label: "View Events"
     },
     {
-      id: "global-trade",
-      title: "Export, Global Trade & Practice Abroad",
-      desc: "International licensing, WHO benchmarks, export regulations, global wellness centers, and practice in US/EU/UAE.",
-      image: "/assets/hall-photo.png",
-      icon: Globe2,
-      badge: "Global Track",
-      link: "/programs/global-trade",
-    },
+      title: "Info & Resources",
+      desc: "Access essential reference articles, files, and career guides.",
+      link: "/resources",
+      icon: BookOpen,
+      label: "Browse Resources"
+    }
   ];
 
   return (
     <div className="aym-homepage">
-      {/* HERO SECTION — SPLIT VISUAL HIERARCHY */}
+      {/* 1. HERO SECTION — PREMIUM & FOCUS-POINTED */}
       <section className="aym-hero-section" aria-labelledby="hero-title">
         <div className="aym-hero-bg-pattern" aria-hidden="true" />
         <div className="aym-container aym-hero-grid">
@@ -101,11 +87,11 @@ export default function HomePage() {
             </div>
 
             <h1 id="hero-title" className="aym-display aym-hero-h1">
-              Learn Ayurveda & Shape Your Career from Experienced Practitioners
+              Meet the Mentors: Connect Directly with Esteemed Ayurveda Leaders & Shape Your Career
             </h1>
 
             <p className="aym-hero-lead">
-              The official digital Meet the Mentors hall for BAMS students, postgraduates, and practitioners. Receive authentic guidance on PG branches, clinical setup, research grants, and global practice.
+              The official digital Meet the Mentors hall for BAMS students, postgraduates, and practitioners. Receive authentic, curated guidance on PG branches, clinical setups, research grants, and global pathways.
             </p>
 
             <div className="aym-hero-cta-group">
@@ -113,12 +99,8 @@ export default function HomePage() {
                 <Send size={18} aria-hidden="true" />
                 <span>Ask a Mentor</span>
               </Link>
-              <Link to={{ pathname: "/", hash: "#track" }} className="aym-btn aym-btn-secondary aym-btn-lg aym-track-btn">
-                <Ticket size={18} aria-hidden="true" />
-                <span>Track My Answer</span>
-              </Link>
-              <Link to="/mentors" className="aym-btn aym-btn-outline aym-btn-lg">
-                <span>Explore Mentors</span>
+              <Link to="/mentors" className="aym-btn aym-btn-secondary aym-btn-lg">
+                <span>Explore Mentors Directory</span>
                 <ArrowRight size={18} aria-hidden="true" />
               </Link>
             </div>
@@ -170,7 +152,37 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* VISUAL STEP SEQUENCE: HOW AYURDISHA WORKS */}
+      {/* 2. COMPACT QUICK ACCESS / PATHWAYS SECTION */}
+      <section className="aym-section aym-pathways-section" aria-labelledby="pathways-title">
+        <div className="aym-container">
+          <div className="aym-section-header aym-text-center">
+            <p className="aym-eyebrow">QUICK ACCESS DESK</p>
+            <h2 id="pathways-title" className="aym-display">Interactive Navigation Choices</h2>
+            <p className="aym-section-lead">Select your career pathway or find important event and contact information below.</p>
+          </div>
+
+          <div className="aym-grid-4 aym-pathways-grid">
+            {pathways.map((path, idx) => {
+              const Icon = path.icon;
+              return (
+                <div key={idx} className="aym-pathway-card">
+                  <div className="aym-pathway-icon-wrap">
+                    <Icon size={24} aria-hidden="true" />
+                  </div>
+                  <h3 className="aym-pathway-card-title">{path.title}</h3>
+                  <p className="aym-pathway-card-desc">{path.desc}</p>
+                  <Link to={path.link} className="aym-btn aym-btn-ghost aym-pathway-card-cta">
+                    <span>{path.label}</span>
+                    <ArrowRight size={14} aria-hidden="true" />
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. HOW AYURDISHA WORKS */}
       <section className="aym-section aym-bg-surface" aria-labelledby="how-it-works-title">
         <div className="aym-container">
           <div className="aym-section-header aym-text-center">
@@ -207,57 +219,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 10 VISUAL CAREER TRACKS HIGHLIGHT */}
-      <section className="aym-section" aria-labelledby="home-tracks-title">
-        <div className="aym-container">
-          <div className="aym-section-header-flex">
-            <div>
-              <p className="aym-eyebrow">CAREER PATHWAYS</p>
-              <h2 id="home-tracks-title" className="aym-display">Explore 10 National Career Tracks</h2>
-              <p className="aym-section-lead">Actionable roadmaps designed for BAMS graduates, postgraduates, and scholars.</p>
-            </div>
-            <Link to="/programs" className="aym-btn aym-btn-outline">
-              <span>View All 10 Tracks</span>
-              <ArrowRight size={16} aria-hidden="true" />
-            </Link>
-          </div>
-
-          <div className="aym-grid-2 aym-visual-tracks-grid">
-            {careerTrackVisuals.map((track) => {
-              const IconComponent = track.icon;
-              return (
-                <div key={track.id} className="aym-track-visual-card">
-                  <div className="aym-track-card-img-wrap">
-                    <img 
-                      src={track.image} 
-                      alt={track.title} 
-                      className="aym-track-card-img"
-                      loading="lazy"
-                    />
-                    <span className="aym-badge aym-badge-gold aym-track-card-badge">
-                      {track.badge}
-                    </span>
-                  </div>
-                  <div className="aym-track-card-content">
-                    <div className="aym-track-card-icon">
-                      <IconComponent size={20} aria-hidden="true" />
-                    </div>
-                    <h3 className="aym-track-card-title">{track.title}</h3>
-                    <p className="aym-track-card-desc">{track.desc}</p>
-                    <Link to={track.link} className="aym-btn aym-btn-ghost aym-track-card-cta">
-                      <span>Explore Pathway</span>
-                      <ArrowRight size={14} aria-hidden="true" />
-                    </Link>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* FEATURED MENTORS PREVIEW */}
-      <section className="aym-section aym-bg-surface" aria-labelledby="home-mentors-title">
+      {/* 4. FEATURED MENTORS ROW */}
+      <section className="aym-section" aria-labelledby="home-mentors-title">
         <div className="aym-container">
           <div className="aym-section-header-flex">
             <div>
@@ -265,22 +228,22 @@ export default function HomePage() {
               <h2 id="home-mentors-title" className="aym-display">Learn from Experienced Leaders</h2>
               <p className="aym-section-lead">Distinguished academicians and clinical specialists guiding BAMS mentees.</p>
             </div>
-            <Link to="/mentors" className="aym-btn aym-btn-outline">
-              <span>View All 23 Mentors</span>
+            <Link to="/mentors" className="aym-btn aym-btn-outline aym-view-all-mentors-link">
+              <span>View All Mentors</span>
               <ArrowRight size={16} aria-hidden="true" />
             </Link>
           </div>
 
-          <div className="aym-mentors-grid">
+          <div className="aym-mentors-grid-premium">
             {featuredMentors.map((m) => {
               const portrait = mentorPortraitUrl(m);
               const initials = mentorInitials(m.name);
               return (
-                <article key={m.id} className="aym-mentor-card">
-                  <div className="aym-mentor-card-top">
+                <article key={m.id} className="aym-mentor-card-premium">
+                  <div className="aym-mentor-avatar-wrap">
                     <div className="aym-mentor-avatar">
                       {portrait ? (
-                        <img src={portrait} alt={`Portrait of ${m.name}`} width={72} height={72} loading="lazy" />
+                        <img src={portrait} alt={`Portrait of ${m.name}`} width={80} height={80} loading="lazy" />
                       ) : (
                         <span aria-hidden="true">{initials}</span>
                       )}
@@ -291,7 +254,11 @@ export default function HomePage() {
                       <Link to={mentorPublicPath(m)} className="aym-mentor-name-link">{m.name}</Link>
                     </h3>
                     <p className="aym-mentor-role">{m.designation || "Distinguished Mentor"}</p>
-                    {m.expertise && <p className="aym-mentor-affiliation">Specialty: {m.expertise}</p>}
+                    {m.expertise && (
+                      <span className="aym-mentor-expertise-badge">
+                        {m.expertise}
+                      </span>
+                    )}
                   </div>
                   <div className="aym-mentor-card-actions">
                     <Link to={mentorPublicPath(m)} className="aym-btn aym-mentor-card-cta" aria-label={`View profile of ${m.name}`}>
@@ -306,8 +273,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CONGRESS HALL & PODCAST VISUAL SECTION */}
-      <section className="aym-section" aria-labelledby="home-hall-title">
+      {/* 5. CONGRESS HALL PREVIEW */}
+      <section className="aym-section aym-bg-surface" aria-labelledby="home-hall-title">
         <div className="aym-container">
           <div className="aym-grid-2 aym-hall-preview-grid">
             <div className="aym-hall-preview-media">
@@ -352,8 +319,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FAQ SECTION */}
-      <section className="aym-section aym-bg-surface" aria-labelledby="faq-title">
+      {/* 6. FAQ SECTION */}
+      <section className="aym-section" aria-labelledby="faq-title">
         <div className="aym-container aym-max-w-4xl">
           <div className="aym-section-header aym-text-center">
             <p className="aym-eyebrow">QUESTIONS & ANSWERS</p>
@@ -375,12 +342,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FINAL CTA BANNER */}
-      <section className="aym-cta-banner">
+      {/* 7. FINAL CTA BANNER — CLEAN & UNCLUTTERED */}
+      <section className="aym-cta-banner-premium">
         <div className="aym-container aym-cta-container">
           <h2 className="aym-display aym-cta-title">Ready to Ask a Mentor Your Career Question?</h2>
           <p className="aym-cta-lead">
-            Register for the 11th World Ayurveda Congress digital hall and receive authentic guidance.
+            Register for the 11th World Ayurveda Congress digital hall and receive authentic career guidance.
           </p>
           <div className="aym-cta-actions">
             <Link to={{ pathname: "/", hash: "#ask" }} className="aym-btn aym-btn-primary aym-btn-lg">

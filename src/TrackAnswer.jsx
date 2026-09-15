@@ -1,5 +1,5 @@
 import React from "react";
-import { Feather } from "lucide-react";
+import { Feather, Sparkles, BookOpen, Layers, Award, FileText, CheckCircle2 } from "lucide-react";
 
 function splitProse(text) {
   const raw = String(text || "").replace(/\r\n/g, "\n").trim();
@@ -21,25 +21,36 @@ function LetterExtras({ actions, mistake, resources }) {
   const note = String(mistake || "").trim();
   if (!acts.length && !note && !res.length) return null;
   return (
-    <div className="aym-letter-extras">
+    <div className="aym-letter-extras-premium">
       {acts.length > 0 && (
-        <div className="aym-letter-extra">
-          <div className="aym-eyebrow">Do these next</div>
-          <ol>
+        <div className="aym-letter-extra-premium">
+          <div className="aym-eyebrow-premium">
+            <CheckCircle2 size={13} className="aym-extra-icon-green" aria-hidden="true" />
+            <span>Recommended Next Steps</span>
+          </div>
+          <ol className="aym-letter-list-premium">
             {acts.map((a, i) => <li key={i}>{a}</li>)}
           </ol>
         </div>
       )}
+      
       {note ? (
-        <div className="aym-letter-mistake">
-          <div className="aym-eyebrow">Mistake to avoid</div>
-          <p>{note}</p>
+        <div className="aym-letter-mistake-premium">
+          <div className="aym-eyebrow-premium aym-text-warn">
+            <Award size={13} className="aym-extra-icon-gold" aria-hidden="true" />
+            <span>Crucial Mistake to Avoid</span>
+          </div>
+          <p className="aym-letter-mistake-text-premium">{note}</p>
         </div>
       ) : null}
+      
       {res.length > 0 && (
-        <div className="aym-letter-extra">
-          <div className="aym-eyebrow">Official resources</div>
-          <ul>
+        <div className="aym-letter-extra-premium">
+          <div className="aym-eyebrow-premium">
+            <FileText size={13} className="aym-extra-icon-blue" aria-hidden="true" />
+            <span>Official References & Material</span>
+          </div>
+          <ul className="aym-letter-list-premium">
             {res.map((r, i) => <li key={i}>{r}</li>)}
           </ul>
         </div>
@@ -62,28 +73,68 @@ export function MentorAnswerLetter({
   const paragraphs = splitProse(body);
   if (!paragraphs.length) return null;
   const by = presentMentorName(mentorName);
-  const eye = String(eyebrow || (variant === "hall" ? "From the hall" : "Written for you"));
+  
+  const isHall = variant === "hall";
+  const defaultEyebrow = isHall ? "WAC Shared Stage Answer" : "Personal Mentorship Letter";
+  const eye = String(eyebrow || defaultEyebrow);
+  
   return (
-    <article className={`aym-letter aym-letter-${variant}`} aria-label={title}>
-      <div className="aym-letter-mark" aria-hidden="true">
-        <Feather size={16} strokeWidth={1.75} />
+    <article className={`aym-letter-premium ${isHall ? "aym-letter-premium-hall" : "aym-letter-premium-personal"}`} aria-label={title}>
+      {/* Visual Seal Indicator on the Side/Top */}
+      <div className="aym-letter-seal-premium" aria-hidden="true">
+        {isHall ? (
+          <Sparkles size={16} strokeWidth={2} />
+        ) : (
+          <Feather size={16} strokeWidth={2} />
+        )}
       </div>
-      <div className="aym-letter-top">
-        <div className="aym-eyebrow aym-letter-eye">{eye}</div>
-        <h3 className="aym-serif aym-letter-title">{title}</h3>
-        {kicker ? <p className="aym-letter-kicker">{kicker}</p> : null}
-        {by ? <p className="aym-letter-byline">Answered by <b>{by}</b></p> : null}
+
+      <div className="aym-letter-top-premium">
+        <div className="aym-letter-badge-row-premium">
+          <span className={`aym-letter-type-badge ${isHall ? "badge-hall" : "badge-personal"}`}>
+            {isHall ? <Layers size={12} aria-hidden="true" /> : <Feather size={12} aria-hidden="true" />}
+            <span>{isHall ? "Shared Joint Guidance" : "Direct Individual Letter"}</span>
+          </span>
+          <span className="aym-letter-eye-premium">{eye}</span>
+        </div>
+        
+        <h3 className="aym-letter-title-premium">{title}</h3>
+        
+        {kicker ? (
+          <p className="aym-letter-kicker-premium">
+            <b>Re:</b> {kicker}
+          </p>
+        ) : null}
+        
+        {by ? (
+          <p className="aym-letter-byline-premium">
+            <span>Authored by:</span> <strong>{by}</strong>
+          </p>
+        ) : null}
       </div>
-      <div className="aym-letter-rule" aria-hidden="true" />
-      <div className="aym-letter-prose">
+
+      <div className="aym-letter-rule-premium" aria-hidden="true" />
+
+      <div className="aym-letter-prose-premium">
         {paragraphs.map((p, i) => (
           <p key={i} style={{ whiteSpace: "pre-wrap" }}>{p}</p>
         ))}
       </div>
+
       <LetterExtras actions={actions} mistake={mistake} resources={resources} />
-      <footer className="aym-letter-sign">
-        <span>AYURDISHA · Meet the Mentors</span>
-        {by ? <span>{by}</span> : <span>Hall guidance</span>}
+
+      <footer className="aym-letter-sign-premium">
+        <div className="aym-letter-sign-branding">
+          <strong>AYURDISHA</strong>
+          <span>11th World Ayurveda Congress · Bhubaneswar</span>
+        </div>
+        <div className="aym-letter-sign-signature">
+          {by ? (
+            <span className="aym-sig-text">{by}</span>
+          ) : (
+            <span className="aym-sig-text">Hall Desk Editor</span>
+          )}
+        </div>
       </footer>
     </article>
   );

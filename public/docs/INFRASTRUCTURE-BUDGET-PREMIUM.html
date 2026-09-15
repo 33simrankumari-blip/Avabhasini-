@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infrastructure Budget (Premium Scenario) — AYURDISHA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --forest: #1B4332;
+      --forest-deep: #0F2A1F;
+      --forest-mid: #2D6A4F;
+      --cream: #F5EBE0;
+      --sand: #EDE4D4;
+      --gold: #D4A84B;
+      --oak: #C4A484;
+      --ink: #1A2E24;
+      --muted: #5C6B62;
+      --line: #D9CBB8;
+      --white: #FFFEFB;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+      font-size: 11pt;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 210mm;
+      margin: 0 auto;
+      background: var(--white);
+      min-height: 297mm;
+      padding: 0;
+    }
+
+    .title-page {
+      min-height: 297mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(165deg, var(--forest-deep) 0%, var(--forest) 45%, var(--forest-mid) 100%);
+      color: var(--white);
+      padding: 48px 56px;
+      page-break-after: always;
+    }
+
+    .title-page .eyebrow {
+      font-size: 10pt;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .title-page h1 {
+      font-family: Fraunces, "Source Serif 4", Georgia, serif;
+      font-size: 32pt;
+      font-weight: 700;
+      line-height: 1.15;
+      margin-top: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .title-page .subtitle {
+      font-size: 14pt;
+      color: var(--sand);
+      margin-top: 16px;
+      font-weight: 400;
+    }
+
+    .title-page .event {
+      font-family: Fraunces, Georgia, serif;
+      font-size: 13pt;
+      color: var(--gold);
+      margin-top: 32px;
+    }
+
+    .title-divider {
+      width: 80px;
+      height: 3px;
+      background: var(--gold);
+      margin: 28px 0;
+    }
+
+    .title-budget {
+      margin-top: 28px;
+      padding: 18px 22px;
+      border: 2px solid var(--gold);
+      border-radius: 6px;
+      background: rgba(212, 168, 75, 0.1);
+    }
+
+    .title-budget .label {
+      font-size: 9.5pt;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .title-budget .value {
+      font-family: Fraunces, Georgia, serif;
+      font-size: 28pt;
+      font-weight: 700;
+      color: var(--gold);
+      margin-top: 4px;
+    }
+
+    .title-budget .usd {
+      font-size: 11pt;
+      color: var(--sand);
+      margin-top: 2px;
+    }
+
+    .title-meta {
+      margin-top: auto;
+      border-top: 1px solid rgba(212, 168, 75, 0.35);
+      padding-top: 28px;
+    }
+
+    .title-meta table { width: 100%; border-collapse: collapse; }
+    .title-meta td { padding: 6px 0; vertical-align: top; }
+    .title-meta td:first-child {
+      width: 38%;
+      color: var(--oak);
+      font-size: 9.5pt;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .title-meta td:last-child { font-size: 10.5pt; }
+
+    .content-page {
+      padding: 44px 52px 56px;
+      page-break-after: always;
+    }
+
+    .content-page:last-child { page-break-after: auto; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--forest);
+    }
+
+    .section-num {
+      background: var(--forest);
+      color: var(--gold);
+      font-family: Fraunces, serif;
+      font-size: 13pt;
+      font-weight: 700;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    h2 {
+      font-family: Fraunces, Georgia, serif;
+      font-size: 16pt;
+      font-weight: 700;
+      color: var(--forest);
+      letter-spacing: -0.02em;
+    }
+
+    h3 {
+      font-family: Fraunces, Georgia, serif;
+      font-size: 12pt;
+      font-weight: 600;
+      color: var(--forest-mid);
+      margin: 20px 0 10px;
+    }
+
+    p { margin-bottom: 12px; }
+
+    ul, ol { margin: 8px 0 14px 22px; }
+    li { margin-bottom: 5px; }
+
+    .summary-box {
+      background: linear-gradient(135deg, var(--forest-deep), var(--forest));
+      color: var(--white);
+      border-radius: 8px;
+      padding: 22px 26px;
+      margin: 18px 0 22px;
+    }
+
+    .summary-box p { margin-bottom: 8px; color: var(--sand); }
+    .summary-box p:last-child { margin-bottom: 0; }
+    .summary-box strong { color: var(--gold); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 20px;
+      font-size: 9.5pt;
+    }
+
+    thead th {
+      background: var(--forest);
+      color: var(--white);
+      text-align: left;
+      padding: 9px 10px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    tbody td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    tbody tr:nth-child(even) { background: var(--sand); }
+    tbody tr.total-row { background: var(--forest) !important; color: var(--white); font-weight: 700; }
+    tbody tr.total-row td { border-bottom: none; }
+    tbody tr.subtotal-row { background: #e8ddd0 !important; font-weight: 600; }
+    tbody tr.reserve-row { background: #f0e6d6 !important; font-style: italic; }
+
+    .note-box {
+      background: var(--sand);
+      border-left: 4px solid var(--gold);
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 10pt;
+    }
+
+    .timeline-table td:first-child {
+      font-weight: 600;
+      color: var(--forest);
+      white-space: nowrap;
+      width: 22%;
+    }
+
+    .footer-block {
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      font-size: 9pt;
+      color: var(--muted);
+    }
+
+    .prepared-table td:first-child {
+      font-weight: 600;
+      color: var(--forest-mid);
+      width: 32%;
+      padding: 5px 12px 5px 0;
+    }
+
+    .prepared-table td { padding: 5px 0; border: none; background: none !important; }
+
+    .page-footer {
+      text-align: center;
+      font-size: 8.5pt;
+      color: var(--muted);
+      margin-top: 28px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    .compact-table { font-size: 8.5pt; }
+    .compact-table td, .compact-table th { padding: 6px 8px; }
+
+    @media print {
+      body {
+        background: white;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .page { max-width: none; box-shadow: none; }
+      .title-page, .content-page { page-break-after: always; }
+    }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <section class="title-page">
+    <div>
+      <div class="eyebrow">World Ayurveda Foundation</div>
+      <h1>Infrastructure Budget<br/>Proposal (Premium Plan)</h1>
+      <div class="title-divider"></div>
+      <div class="subtitle">AYURDISHA — Meet the Mentors<br/>Experience Zone</div>
+      <div class="event">11th World Ayurveda Congress · Bhubaneswar 2026</div>
+      <div class="title-budget">
+        <div class="label">Total Approved Allocation — Premium Scaling Scenario</div>
+        <div class="value">₹2,15,000</div>
+        <div class="usd">Approximately $2,529 USD (at ₹85 per USD)</div>
+      </div>
+    </div>
+    <div class="title-meta">
+      <table>
+        <tr><td>Organization</td><td>World Ayurveda Foundation</td></tr>
+        <tr><td>Document Type</td><td>Committee Presentation — Infrastructure &amp; Technical Services</td></tr>
+        <tr><td>Production Application</td><td>https://ayushmarg.vercel.app</td></tr>
+        <tr><td>Planned Domain</td><td>ayurdisha.ai</td></tr>
+        <tr><td>Date</td><td>September 2026</td></tr>
+        <tr><td>Classification</td><td>Internal — Organising Committee Review</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="content-page">
+    <div class="section-header">
+      <div class="section-num">ES</div>
+      <h2>Executive Summary</h2>
+    </div>
+
+    <p>This proposal outlines the premium-tier infrastructure, platform development, and operational budget to support **AYURDISHA** under extreme concurrent user volumes. To guarantee absolute uptime during peak hours of the 11th World Ayurveda Congress (with an estimated 5,000+ concurrent active delegates registering and interacting with the platform), this premium scenario utilizes Vercel Enterprise scaling, professional transactional OTP gateways, and Antigravity AI Ultra capabilities.</p>
+
+    <div class="summary-box">
+      <p>The standard free or lower paid tiers will **inevitably throttle or fail** during the live opening hours when thousands of students verify their emails simultaneously.</p>
+      <p>This premium architecture uses **SendGrid/Resend Pro transactional APIs** to ensure sub-second 6-digit OTP delivery, alongside **Vercel Enterprise** to handle infinite concurrent serverless queries and prevent DDoS/automated bot registrations.</p>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Subtotal</th><th>Description</th><th>Amount (INR)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>A</strong></td><td>Cloud &amp; Scaling Infrastructure (Vercel Enterprise, Firebase Blaze, Resend/SendGrid Pro, SSL, Security)</td><td><strong>₹88,500</strong></td></tr>
+        <tr><td><strong>B</strong></td><td>AI &amp; Development Subscriptions (Antigravity AI Ultra, Cursor Teams/Business)</td><td><strong>₹35,000</strong></td></tr>
+        <tr><td><strong>C</strong></td><td>Engineering, Security &amp; Load Testing (Senior dev, concurrency test, audit)</td><td><strong>₹63,000</strong></td></tr>
+        <tr><td><strong>D</strong></td><td>Event Assurance &amp; Contingency Reserves (24/7 on-call monitoring, support, backup buffer)</td><td><strong>₹23,500</strong></td></tr>
+        <tr class="total-row"><td><strong>GRAND TOTAL</strong></td><td><strong>Comprehensive Premium Allocation</strong></td><td><strong>₹2,15,000</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="page-footer">AYURDISHA Premium Infrastructure Budget · Page 2</div>
+  </section>
+
+  <section class="content-page">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <h2>Itemized Premium Budget</h2>
+    </div>
+
+    <table class="compact-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Line Item Description</th>
+          <th>Justification</th>
+          <th>Amount (INR)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="subtotal-row"><td colspan="4"><strong>A. Cloud, Scaling &amp; Communications</strong></td></tr>
+        <tr><td>Cloud &amp; Scaling</td><td>Vercel Enterprise Tier</td><td>Managed WAF protection, 99.99% uptime SLA, cold-start prevention, and serverless execution headroom for 5,000+ concurrent users.</td><td>₹55,000</td></tr>
+        <tr><td>Cloud &amp; Scaling</td><td>Firebase Blaze (High-Performance Hub)</td><td>Unlimited database reads/writes for real-time mentor clustering, live stage synchronization, and delegate data export.</td><td>₹15,000</td></tr>
+        <tr><td>Communications</td><td>SendGrid/Resend Pro (Transactional OTP API)</td><td>Guarantees high deliverability and sub-second arrival of 6-digit email OTP codes, replacing standard Gmail (which has strict daily limits).</td><td>₹12,000</td></tr>
+        <tr><td>Identity &amp; Security</td><td>ayurdisha.ai Premium Domain &amp; SSL</td><td>Official AI-tier domain registration, CDN caching headrooms, and organization-validated security certificates.</td><td>₹6,500</td></tr>
+        
+        <tr class="subtotal-row"><td colspan="4"><strong>B. AI Platform &amp; Development Tools</strong></td></tr>
+        <tr><td>AI &amp; Dev Tools</td><td>Antigravity AI Ultra Platform License</td><td>Generous token budget, ultra-low latency, and high rate limits for the Gemini-powered Knowledge search engine.</td><td>₹25,000</td></tr>
+        <tr><td>AI &amp; Dev Tools</td><td>Cursor Business (Teams Subscription)</td><td>Pooled usage, priority indexing, and secure repository controls for the technical team to maintain and update the platform.</td><td>₹10,000</td></tr>
+
+        <tr class="subtotal-row"><td colspan="4"><strong>C. Engineering, Security &amp; Load Testing</strong></td></tr>
+        <tr><td>Engineering</td><td>Senior Platform Development</td><td>Development of delegate OTP verification, mentor curation desk, briefing pack generator, and responsive UI features.</td><td>₹45,000</td></tr>
+        <tr><td>Engineering</td><td>Security Audit &amp; Concurrency Load Testing</td><td>Third-party penetration testing and simulating 3,000 simultaneous users to prevent opening-day crash.</td><td>₹18,000</td></tr>
+
+        <tr class="subtotal-row"><td colspan="4"><strong>D. Operational Support &amp; Reserves</strong></td></tr>
+        <tr><td>Assurance</td><td>24/7 Event-Week On-call Support</td><td>Direct live monitoring (Sentry/UptimeRobot premium) and active engineering team to support the 3-day congress.</td><td>₹16,000</td></tr>
+        <tr><td>Reserves</td><td>Technical Contingency Buffer</td><td>Unforeseen scaling spikes, additional database indexes, or emergency hotfixes during the event cycle.</td><td>₹7,500</td></tr>
+        
+        <tr class="total-row"><td colspan="3"><strong>GRAND TOTAL PREMIUM SCENARIO</strong></td><td><strong>₹2,15,000</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note-box">
+      <strong>Verification and Reliability:</strong> All cloud infrastructure scales fluidly based on consumption. Standard Gmail-based SMTP has a daily delivery hard-cap which makes it non-viable for a large conference; transactional Resend Pro is mandatory to ensure OTP emails are not flagged as spam.
+    </div>
+
+    <div class="page-footer">AYURDISHA Premium Infrastructure Budget · Page 3</div>
+  </section>
+
+  <section class="content-page">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <h2>Prepared By</h2>
+    </div>
+
+    <table class="prepared-table" style="margin-top:20px">
+      <tbody>
+        <tr><td>Document</td><td>Premium Infrastructure &amp; Technical Budget — AYURDISHA</td></tr>
+        <tr><td>Prepared by</td><td>AYURDISHA Technical Team, World Ayurveda Foundation</td></tr>
+        <tr><td>Organization</td><td>World Ayurveda Foundation</td></tr>
+        <tr><td>Programme</td><td>AYURDISHA — Meet the Mentors Experience Zone</td></tr>
+        <tr><td>Application URL</td><td>https://ayushmarg.vercel.app</td></tr>
+        <tr><td>Planned Domain</td><td>ayurdisha.ai</td></tr>
+        <tr><td>Backend Services</td><td>Firebase Firestore, Vercel Serverless (Enterprise), Resend Pro</td></tr>
+        <tr><td>Prepared for</td><td>World Ayurveda Foundation — Congress Organising Committee</td></tr>
+        <tr><td>Date</td><td>September 2026</td></tr>
+      </tbody>
+    </table>
+
+    <div class="footer-block" style="margin-top:60px">
+      <p><em>This proposal guarantees enterprise-grade performance and absolute security compliance for high-profile public-sector and institutional use during the 11th World Ayurveda Congress. The budget allocates resources strictly to premium service contracts and verified operational providers.</em></p>
+    </div>
+
+    <div class="page-footer">AYURDISHA Premium Infrastructure Budget · Page 4</div>
+  </section>
+
+</div>
+
+</body>
+</html>

@@ -3,5 +3,5 @@ Allow: /
 Disallow: /api/
 Disallow: /docs/
 
-Sitemap: https://ayurdisha-d8xb0aegc-vishnukumar07042004-techs-projects.vercel.app/sitemap.xml
+Sitemap: https://ayushmarg.vercel.app/sitemap.xml
 

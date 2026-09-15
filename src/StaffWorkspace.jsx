@@ -56,7 +56,7 @@ export default function StaffWorkspace({ onGoTab, onLogout, questionsCount = 0, 
           </div>
           <h1 className="aym-display aym-staff-workspace-title">Staff Curation & Management Portal</h1>
           <p className="aym-staff-workspace-lead">
-            Welcome to the official AYUSHMARG staff workspace. Manage submitted delegate questions, curate theme stage discussions, prepare mentor briefing packs, and track career track insights.
+            Welcome to the official AYURDISHA staff workspace. Manage submitted delegate questions, curate theme stage discussions, prepare mentor briefing packs, and track career track insights.
           </p>
 
           <div className="aym-staff-workspace-meta-bar">

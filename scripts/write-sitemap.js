@@ -4,8 +4,11 @@ import { writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { MENTORS, mentorPublicPath, mentorsWithNames } from "../src/mentors.js";
+import { getAllPrograms } from "../src/data/programs.js";
+import { getAllEvents } from "../src/data/events.js";
+import { getAllResources } from "../src/data/resources.js";
 
-const ORIGIN = "https://ayurdisha-d8xb0aegc-vishnukumar07042004-techs-projects.vercel.app";
+const ORIGIN = "https://ayushmarg.vercel.app";
 const here = dirname(fileURLToPath(import.meta.url));
 const out = join(here, "..", "public/sitemap.xml");
 
@@ -13,13 +16,22 @@ const staticPaths = [
   "/",
   "/about",
   "/mentors",
+  "/programs",
+  "/events",
+  "/resources",
   "/contact",
   "/privacy",
   "/terms",
   "/disclaimer",
 ];
 
-const allPaths = [...staticPaths, ...mentorsWithNames(MENTORS).map(m => mentorPublicPath(m))];
+const allPaths = [
+  ...staticPaths,
+  ...mentorsWithNames(MENTORS).map(m => mentorPublicPath(m)),
+  ...getAllPrograms().map(p => p.path),
+  ...getAllEvents().map(e => e.path || `/events/${e.slug}`),
+  ...getAllResources().map(r => r.path || `/resources/${r.slug}`),
+];
 
 const urls = allPaths.map(path => {
   const loc = `${ORIGIN}${path === "/" ? "/" : path}`;
